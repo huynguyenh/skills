@@ -1,5 +1,5 @@
 ---
-name: hnh-sentry-report
+name: hnh-report-sentry
 description: Investigate a Sentry issue by fetching full error context (stacktraces, events, tags, frequency) and exploring the local codebase to understand root cause. Generates a prioritized report with suggested fixes and offers to create a Jira ticket. Use this skill whenever the user shares a Sentry issue URL, mentions a Sentry error, asks to investigate/debug/triage a production error, or wants to understand why something is failing in Sentry — even if they don't say "Sentry" explicitly but share a link from a Sentry domain.
 ---
 
@@ -43,7 +43,7 @@ From the response, extract:
 - `title`, `culprit`, `count`, `userCount`, `firstSeen`, `lastSeen`, `status`
 - `shortId` — the human-readable issue ID (e.g., `PROJ-ABC`)
 
-Then look up the project slug in `~/.claude/memory/service-mapping.md` to find the local repo path and service directory. If the slug is not in the mapping, ask the user.
+Then ask the user which local repo path corresponds to this project slug, unless it's obvious from the conversation context.
 
 ### Phase 2: Parallel Investigation
 

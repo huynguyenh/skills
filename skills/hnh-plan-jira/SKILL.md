@@ -49,7 +49,7 @@ Launch two agents in parallel. Read each agent's `.md` file from `~/.claude/skil
 | Context Gatherer | `~/.claude/skills/hnh-plan/agents/context-gatherer.md` | Prior attempts, git history, related issues, architecture docs, current state |
 | Architecture Analyst | `~/.claude/skills/hnh-plan/agents/architecture-analyst.md` | Full system impact, dependencies, API contracts, DB changes, performance, security, alternative approaches |
 
-Use `~/.claude/memory/service-mapping.md` to map the Jira project key to the right repo/service.
+Ask the user which repo/service this relates to if not obvious from the Jira project key.
 
 ### 4. Approach decision
 Present alternatives with tradeoffs. Get user sign-off.
@@ -65,4 +65,4 @@ Show the plan. Iterate until satisfied.
 
 ## Credential Reference
 
-Tokens in `~/.zshrc` — read and inline literal values. See `~/.claude/memory/credentials.md`.
+Tokens in `~/.zshrc` — read and inline literal values. See `~/.claude/rules/global-credentials.md`.

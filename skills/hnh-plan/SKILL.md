@@ -33,7 +33,7 @@ Launch two agents in parallel. Read each agent's `.md` file from `agents/` and p
 | Context Gatherer | `agents/context-gatherer.md` | Prior attempts, git history, related issues, architecture docs, current state |
 | Architecture Analyst | `agents/architecture-analyst.md` | Full system impact, dependencies, API contracts, DB changes, performance, security, alternative approaches |
 
-Use `~/.claude/memory/service-mapping.md` to find the right repo/service.
+Ask the user which repo/service this relates to if not obvious from the conversation context.
 
 ### 4. Approach decision
 Present alternative approaches from the Architecture Analyst with tradeoffs. Get user sign-off before writing the plan.
@@ -46,4 +46,4 @@ Show the plan. Iterate until the user is satisfied.
 
 ## Credential Reference
 
-Tokens in `~/.zshrc` — read and inline literal values. See `~/.claude/memory/credentials.md`.
+Tokens in `~/.zshrc` — read and inline literal values. See `~/.claude/rules/global-credentials.md`.

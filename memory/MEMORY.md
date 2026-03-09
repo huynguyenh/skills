@@ -20,17 +20,18 @@
 - Multiple plans can exist per ticket (different dates/approaches)
 
 ## Custom Skills
-- `/hnh-pr-review` — Deep PR review (context gathering, build verification, principal-engineer-level review with categorized report)
-- `/hnh-sentry-report` — Investigate a Sentry issue (fetch data, explore codebase, prioritized report P0-P4, optional Jira ticket)
+- `/hnh-review-pr` — Deep PR review (context gathering, build verification, principal-engineer-level review with categorized report)
+- `/hnh-report-sentry` — Investigate a Sentry issue (fetch data, explore codebase, prioritized report P0-P4, optional Jira ticket)
 - `/hnh-backup` — Back up skills, plans, rules, memory to GitHub with credential sanitization
 - `/hnh-setup` — Bootstrap or sync Claude workspace on any machine
 - `/hnh-plan` — Create implementation plan from plain text description
 - `/hnh-plan-jira` — Create implementation plan from a Jira ticket (fetches ticket details first)
 - `/hnh-plan-notion` — Create implementation plan from a Notion page (fetches page content first)
-- `/hnh-skill-creator` — Create, evaluate, and improve skills with test cases and benchmarks
-- `/hnh-add-knowledge` — Capture and organize knowledge by scope (global/work/personal) and domain, synced to Google Drive
-- `/hnh-gg-sheets` — Interact with Google Sheets via Sheets & Drive APIs (create, read, write, format, share, search)
-- `/hnh-notion` — Interact with Notion workspace via REST API (read pages, create/update pages, query databases, manage records, search)
+- `/hnh-create-skill` — Create, evaluate, and improve skills with test cases and benchmarks
+- `/hnh-add-knowledge` — Capture and organize knowledge by scope (global/work/personal) and domain
+- `/hnh-gg-sheets` — Interact with Google Sheets (create, read, write, format, share, search)
+- `/hnh-notion` — Interact with Notion (read/create/update pages, query databases, search workspace)
+- `/hnh-maintain-skills` — Scan all custom skills for improvement opportunities and fix inconsistencies
 
 ## API Credentials
 

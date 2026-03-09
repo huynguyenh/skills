@@ -15,30 +15,21 @@ Accept:
 
 ## Phase 0: Fetch Notion Page
 
-Read `~/.zshrc` for `NOTION_API_TOKEN`. If not configured (placeholder value), tell the user:
-
-> "No Notion token configured. To set this up:
-> 1. Go to https://www.notion.so/my-integrations and create an internal integration
-> 2. Copy the token (starts with `ntn_` or `secret_`)
-> 3. Update `~/.zshrc`: replace `<YOUR_NOTION_TOKEN_HERE>` with your token
-> 4. Share the Notion page with your integration (click Share → invite the integration)
-> Then try again."
-
-If configured:
+Use the `hnh-notion` skill's CLI tool to fetch the page. Read `~/.zshrc` for `NOTION_API_TOKEN`, then:
 
 ```bash
-# Page metadata
-curl -s -H "Authorization: Bearer <NOTION_API_TOKEN>" \
-  -H "Notion-Version: 2022-06-28" \
-  "https://api.notion.com/v1/pages/<PAGE_ID>" | python3 -m json.tool
-
-# Page content (blocks)
-curl -s -H "Authorization: Bearer <NOTION_API_TOKEN>" \
-  -H "Notion-Version: 2022-06-28" \
-  "https://api.notion.com/v1/blocks/<PAGE_ID>/children?page_size=100" | python3 -m json.tool
+NOTION_TOKEN="<value from ~/.zshrc>"
+python3 ~/.claude/skills/hnh-notion/scripts/notion.py --token "$NOTION_TOKEN" read <PAGE_ID>
 ```
 
-Parse blocks recursively — extract `rich_text[].plain_text` from each block type. Present in readable format.
+This returns the page title, properties, and all content rendered as readable text — no need to parse blocks manually.
+
+If the token is missing or a placeholder, tell the user:
+
+> "No Notion token configured. See the hnh-notion skill for setup instructions, or:
+> 1. Go to https://www.notion.so/my-integrations and create an internal integration
+> 2. Add the token to `~/.zshrc` as `NOTION_API_TOKEN`
+> 3. Share the Notion page with the integration"
 
 ## Identifier
 
@@ -74,4 +65,4 @@ Show the plan. Iterate until satisfied.
 
 ## Credential Reference
 
-Tokens in `~/.zshrc` — read and inline literal values. See `~/.claude/memory/credentials.md`.
+Tokens in `~/.zshrc` — read and inline literal values. See `~/.claude/rules/global-credentials.md`.

@@ -12,7 +12,7 @@ If you just want one skill, copy it directly:
 
 ```bash
 # Copy the skill into your Claude Code skills directory
-cp -r skills/hnh-pr-review ~/.claude/skills/
+cp -r skills/hnh-review-pr ~/.claude/skills/
 ```
 
 Then restart Claude Code — it picks up new skills automatically.
@@ -56,34 +56,36 @@ export GITHUB_WORK_USERNAME="your-github-username"
 
 | Skill | Trigger | What it does |
 |-------|---------|-------------|
-| **hnh-pr-review** | Share a GitHub PR URL or say "review this PR" | Deep PR review: fetches PR metadata + linked Jira/esa tickets, verifies the build locally, runs 5 parallel review agents (document context, build, architecture, clean code, discussion history), and delivers a categorized report (Critical / Warning / Suggestion / Clean Code / Nice to Have) with clickable GitHub links. |
+| **hnh-review-pr** | Share a GitHub PR URL or say "review this PR" | Deep PR review: fetches PR metadata + linked Jira/esa tickets, verifies the build locally, runs 5 parallel review agents (document context, build, architecture, clean code, discussion history), and delivers a categorized report (Critical / Warning / Suggestion / Clean Code / Nice to Have) with clickable GitHub links. |
+| **hnh-report-sentry** | Share a Sentry issue URL or say "investigate this Sentry error" | Fetches full Sentry context (stacktraces, events, tags, frequency), explores the local codebase to trace the root cause, and delivers a prioritized report (P0-P4) with suggested fixes. Offers to create a Jira ticket with AI-generated content disclaimer. |
 | **hnh-backup** | Say "backup" or "sync to GitHub" | Backs up skills, plans, rules, and memory to this repo. Sanitizes credentials, device paths, and work usernames before pushing. |
 | **hnh-setup** | Say "setup" on a new machine | Bootstraps the full Claude workspace — clones this repo, creates directory structure, installs skills and rules. Handles both first-time setup and incremental syncs. |
-| **hnh-sentry-report** | Share a Sentry issue URL or say "investigate this Sentry error" | Fetches full Sentry context (stacktraces, events, tags, frequency), explores the local codebase to trace the root cause, and delivers a prioritized report (P0-P4) with suggested fixes. Offers to create a Jira ticket with AI-generated content disclaimer. |
 | **hnh-plan** | Say "plan this" or "create a plan" | Principal-engineer-level implementation planning from plain text. Challenges the problem, interviews, launches parallel agents (context gatherer + architecture analyst), proposes alternatives, and produces a plan with testing strategy, risk analysis, observability, and deployment steps. |
 | **hnh-plan-jira** | Share a Jira ticket URL or ID | Same as hnh-plan but fetches Jira ticket details (description, comments, linked issues) first. |
 | **hnh-plan-notion** | Share a Notion page URL | Same as hnh-plan but fetches Notion page content first. |
-| **hnh-skill-creator** | Say "create a skill" or "improve this skill" | Guided skill creation with test cases, evaluation viewer, quantitative benchmarks, and iterative improvement. Includes description optimization for better triggering accuracy. |
+| **hnh-create-skill** | Say "create a skill" or "improve this skill" | Guided skill creation with test cases, evaluation viewer, quantitative benchmarks, and iterative improvement. Includes description optimization for better triggering accuracy. |
 | **hnh-add-knowledge** | Share a fact, tip, or insight to remember | Capture and organize personal knowledge into a structured, searchable knowledge base by scope (global/work/personal) and domain. |
 | **hnh-gg-sheets** | Say "create a sheet", share a Google Sheets URL, or mention "gsheet" | Interact with Google Sheets via Sheets & Drive APIs — create, read, write, format, share, and search spreadsheets. Defaults to ZenLabs Drive conventions when no project is specified. |
 | **hnh-notion** | Say "in Notion", "with Notion", share a Notion URL, or mention databases/records in a Notion context | Interact with Notion — read pages, create pages, update properties, append content, query databases, manage records, get database schemas, and search across the workspace. Uses the Notion REST API via a Python CLI tool. |
+| **hnh-maintain-skills** | Say "maintain skills", "skill audit", or "review skills" | Scans all custom skills for improvement opportunities — detects raw API calls replaceable by wrapper skills, stale file references, credential anti-patterns, missing cross-references, and duplicated logic. |
 
 ## Repo structure
 
 ```
 CLAUDE.md              # Global instructions (generic, public-safe)
 skills/                # Custom skills
-  hnh-pr-review/       #   PR review with parallel agents
-  hnh-sentry-report/   #   Sentry issue investigation & triage
+  hnh-add-knowledge/   #   Knowledge base manager
+  hnh-backup/          #   Backup to GitHub with sanitization
+  hnh-create-skill/    #   Skill creation & evaluation
+  hnh-gg-sheets/       #   Google Sheets interaction via API
+  hnh-maintain-skills/ #   Skill ecosystem scanner & fixer
+  hnh-notion/          #   Notion workspace interaction via API
   hnh-plan/            #   Implementation planning (plain text, shared workflow)
   hnh-plan-jira/       #   Implementation planning (from Jira ticket)
   hnh-plan-notion/     #   Implementation planning (from Notion page)
-  hnh-backup/          #   Backup to GitHub with sanitization
+  hnh-report-sentry/   #   Sentry issue investigation & triage
+  hnh-review-pr/       #   PR review with parallel agents
   hnh-setup/           #   Workspace bootstrapping
-  hnh-skill-creator/   #   Skill creation & evaluation
-  hnh-add-knowledge/   #   Knowledge base manager
-  hnh-gg-sheets/       #   Google Sheets interaction via API
-  hnh-notion/          #   Notion workspace interaction via API
 memory/                # Persistent memory (preferences, indexes)
 rules/                 # Global rules (git, credentials, workspace)
 ```

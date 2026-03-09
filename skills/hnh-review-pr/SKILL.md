@@ -1,5 +1,5 @@
 ---
-name: hnh-pr-review
+name: hnh-review-pr
 description: Deep PR review with context gathering, build verification, and principal-engineer-level code review. Use this skill whenever the user shares a GitHub PR URL, mentions reviewing a PR, asks to check/review/audit a pull request, or says "review this PR". Triggers on PR URLs from github.com, PR numbers with repo context, or any request to review code changes in a pull request — even if the user doesn't explicitly say "review".
 ---
 
@@ -152,7 +152,7 @@ url = f"https://github.com/{owner}/{repo}/pull/{pr_number}/files#diff-{anchor}R{
 
 Or use the helper script bundled with this skill:
 ```bash
-python3 ~/.claude/skills/hnh-pr-review/scripts/gh_link.py {owner} {repo} {pr_number} {filepath} {line}
+python3 ~/.claude/skills/hnh-review-pr/scripts/gh_link.py {owner} {repo} {pr_number} {filepath} {line}
 ```
 
 Never skip any section. If a category has no findings, show the heading with "None" — this confirms the area was reviewed and nothing was found. This is important for the user to know that every area was checked.
