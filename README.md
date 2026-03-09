@@ -64,6 +64,8 @@ export GITHUB_WORK_USERNAME="your-github-username"
 | **hnh-plan-jira** | Share a Jira ticket URL or ID | Same as hnh-plan but fetches Jira ticket details (description, comments, linked issues) first. |
 | **hnh-plan-notion** | Share a Notion page URL | Same as hnh-plan but fetches Notion page content first. |
 | **hnh-skill-creator** | Say "create a skill" or "improve this skill" | Guided skill creation with test cases, evaluation viewer, quantitative benchmarks, and iterative improvement. Includes description optimization for better triggering accuracy. |
+| **hnh-add-knowledge** | Share a fact, tip, or insight to remember | Capture and organize personal knowledge into a structured, searchable knowledge base by scope (global/work/personal) and domain. |
+| **hnh-gg-sheets** | Say "create a sheet", share a Google Sheets URL, or mention "gsheet" | Interact with Google Sheets via Sheets & Drive APIs — create, read, write, format, share, and search spreadsheets. Defaults to ZenLabs Drive conventions when no project is specified. |
 
 ## Repo structure
 
@@ -78,6 +80,8 @@ skills/                # Custom skills
   hnh-backup/          #   Backup to GitHub with sanitization
   hnh-setup/           #   Workspace bootstrapping
   hnh-skill-creator/   #   Skill creation & evaluation
+  hnh-add-knowledge/   #   Knowledge base manager
+  hnh-gg-sheets/       #   Google Sheets interaction via API
 memory/                # Persistent memory (preferences, indexes)
 rules/                 # Global rules (git, credentials, workspace)
 ```

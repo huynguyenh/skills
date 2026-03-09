@@ -90,7 +90,7 @@ def sanitize_content(content: str, username: str) -> tuple[str, list[str]]:
     if user_path in result:
         count = result.count(user_path)
         result = result.replace(user_path, "/Users/hnh/")
-        changes.append(f"Replaced {count} path(s): /Users/hnh/ → /Users/{hnh}/")
+        changes.append(f"Replaced {count} path(s): /Users/{username}/ → /Users/hnh/")
 
     # Also catch ~ expansions that resolved to the full path
     home_dir = os.path.expanduser("~")
