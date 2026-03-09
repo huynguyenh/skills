@@ -39,6 +39,13 @@ See [credentials.md](credentials.md) — how to load Sentry/Jira/etc. tokens in 
 - **Env vars:** `SENTRY_AUTH_TOKEN`, `SENTRY_ORG=andpad-dev`, `SENTRY_URL` in `~/.zshrc`
 - **API:** Use Bearer token auth, `/api/0/` endpoints. Token has `project:read`, `event:read` scopes (no org-level access)
 
+## Google Drive
+- **Auth:** `gcloud auth print-access-token` (OAuth with Drive scope)
+- **Account:** `hoanghuy2908@gmail.com`
+- **GCP project:** `i-destiny-287315`
+- **API:** REST via `curl` with Bearer token — `https://www.googleapis.com/drive/v3/`
+- **Usage:** Any skill that needs Drive access uses `gcloud auth print-access-token` inline, same pattern as other credentials
+
 # Rules & Conventions
 
 See [rules.md](rules.md) for all enforced rules (ALWAYS/NEVER/MUST statements).

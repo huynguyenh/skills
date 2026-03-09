@@ -5,7 +5,7 @@ description: Capture and organize personal knowledge into a structured, searchab
 
 # Knowledge Base Manager
 
-Capture short pieces of knowledge the user shares, classify them by scope and domain, store them in an organized file structure, and sync to Google Drive.
+Capture short pieces of knowledge the user shares, classify them by scope and domain, and store them in an organized file structure.
 
 ## Storage layout
 
@@ -83,7 +83,6 @@ When the user shares knowledge:
 4. **Read the target file** if it exists — check for duplicates and find the right place to insert
 5. **Write the entry** — append to the domain file, or create it if new
 6. **Update INDEX.md** if a new domain was created
-7. **Sync to Google Drive** — upload the updated file(s)
 
 ## Looking up knowledge
 
@@ -122,31 +121,3 @@ Auto-generate and maintain this file whenever domains change:
 
 Keep summaries short (under 10 words). Update the summary when the domain content evolves significantly.
 
-## Google Drive sync
-
-After adding or updating knowledge, sync the changed files to Google Drive.
-
-### Setup (first time)
-
-1. Check if a "Knowledge Base" folder exists in the user's Drive
-2. If not, create it
-3. Store the folder ID in `~/.claude/knowledge/.drive-folder-id`
-
-### Sync process
-
-Use `gcloud auth print-access-token` for auth, then the Drive API:
-
-- **New file:** Upload with `parents` set to the Knowledge Base folder ID
-- **Existing file:** Find by name in the folder, then update content
-- **Upload as plain text** (not Google Docs) so the markdown stays intact
-
-Mirror the directory structure using subfolders in Drive (global/, work/, personal/).
-
-Keep a `.drive-manifest.json` in `~/.claude/knowledge/` mapping local filenames to Drive file IDs for fast updates:
-
-```json
-{
-  "INDEX.md": "drive-file-id-1",
-  "global/docker.md": "drive-file-id-2"
-}
-```
