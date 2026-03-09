@@ -30,7 +30,9 @@
 - `/hnh-create-skill` — Create, evaluate, and improve skills with test cases and benchmarks
 - `/hnh-add-knowledge` — Capture and organize knowledge by scope (global/work/personal) and domain
 - `/hnh-gg-sheets` — Interact with Google Sheets (create, read, write, format, share, search)
+- `/hnh-gg-drive` — Interact with Google Drive (list, search, upload, download, move, copy, rename, trash, share)
 - `/hnh-notion` — Interact with Notion (read/create/update pages, query databases, search workspace)
+- `/hnh-discord` — Interact with Discord (read/send messages, search, react, threads, manage channels)
 - `/hnh-maintain-skills` — Scan all custom skills for improvement opportunities and fix inconsistencies
 
 ## API Credentials

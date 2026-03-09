@@ -66,7 +66,9 @@ export GITHUB_WORK_USERNAME="your-github-username"
 | **hnh-create-skill** | Say "create a skill" or "improve this skill" | Guided skill creation with test cases, evaluation viewer, quantitative benchmarks, and iterative improvement. Includes description optimization for better triggering accuracy. |
 | **hnh-add-knowledge** | Share a fact, tip, or insight to remember | Capture and organize personal knowledge into a structured, searchable knowledge base by scope (global/work/personal) and domain. |
 | **hnh-gg-sheets** | Say "create a sheet", share a Google Sheets URL, or mention "gsheet" | Interact with Google Sheets via Sheets & Drive APIs — create, read, write, format, share, and search spreadsheets. Defaults to ZenLabs Drive conventions when no project is specified. |
+| **hnh-gg-drive** | Say "upload to Drive", "download from Drive", or mention Google Drive files/folders | Interact with Google Drive — list, search, upload, download, move, copy, rename, trash, and organize files and folders via the Drive API. |
 | **hnh-notion** | Say "in Notion", "with Notion", share a Notion URL, or mention databases/records in a Notion context | Interact with Notion — read pages, create pages, update properties, append content, query databases, manage records, get database schemas, and search across the workspace. Uses the Notion REST API via a Python CLI tool. |
+| **hnh-discord** | Say "in Discord", "on Discord", "post to Discord", or share a Discord link | Interact with Discord — read/send messages, search, react, pin, manage threads, browse channels and members via the Discord Bot API. |
 | **hnh-maintain-skills** | Say "maintain skills", "skill audit", or "review skills" | Scans all custom skills for improvement opportunities — detects raw API calls replaceable by wrapper skills, stale file references, credential anti-patterns, missing cross-references, and duplicated logic. |
 
 ## Repo structure
@@ -77,6 +79,8 @@ skills/                # Custom skills
   hnh-add-knowledge/   #   Knowledge base manager
   hnh-backup/          #   Backup to GitHub with sanitization
   hnh-create-skill/    #   Skill creation & evaluation
+  hnh-discord/         #   Discord interaction via Bot API
+  hnh-gg-drive/        #   Google Drive file management via API
   hnh-gg-sheets/       #   Google Sheets interaction via API
   hnh-maintain-skills/ #   Skill ecosystem scanner & fixer
   hnh-notion/          #   Notion workspace interaction via API
