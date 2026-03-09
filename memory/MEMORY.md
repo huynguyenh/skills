@@ -24,6 +24,9 @@
 - `/hnh-sentry-report` — Investigate a Sentry issue (fetch data, explore codebase, prioritized report P0-P4, optional Jira ticket)
 - `/hnh-backup` — Back up skills, plans, rules, memory to GitHub with credential sanitization
 - `/hnh-setup` — Bootstrap or sync Claude workspace on any machine
+- `/hnh-plan` — Create implementation plan from plain text description
+- `/hnh-plan-jira` — Create implementation plan from a Jira ticket (fetches ticket details first)
+- `/hnh-plan-notion` — Create implementation plan from a Notion page (fetches page content first)
 - `/hnh-skill-creator` — Create, evaluate, and improve skills with test cases and benchmarks
 
 ## API Credentials

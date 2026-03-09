@@ -48,6 +48,7 @@ export JIRA_BASE_URL="https://your-org.atlassian.net"
 export JIRA_EMAIL="you@company.com"
 export JIRA_API_TOKEN="your-token"
 export ESA_ACCESS_TOKEN="your-token"
+export NOTION_API_TOKEN="your-notion-token"
 export GITHUB_WORK_USERNAME="your-github-username"
 ```
 
@@ -59,6 +60,9 @@ export GITHUB_WORK_USERNAME="your-github-username"
 | **hnh-backup** | Say "backup" or "sync to GitHub" | Backs up skills, plans, rules, and memory to this repo. Sanitizes credentials, device paths, and work usernames before pushing. |
 | **hnh-setup** | Say "setup" on a new machine | Bootstraps the full Claude workspace — clones this repo, creates directory structure, installs skills and rules. Handles both first-time setup and incremental syncs. |
 | **hnh-sentry-report** | Share a Sentry issue URL or say "investigate this Sentry error" | Fetches full Sentry context (stacktraces, events, tags, frequency), explores the local codebase to trace the root cause, and delivers a prioritized report (P0-P4) with suggested fixes. Offers to create a Jira ticket with AI-generated content disclaimer. |
+| **hnh-plan** | Say "plan this" or "create a plan" | Principal-engineer-level implementation planning from plain text. Challenges the problem, interviews, launches parallel agents (context gatherer + architecture analyst), proposes alternatives, and produces a plan with testing strategy, risk analysis, observability, and deployment steps. |
+| **hnh-plan-jira** | Share a Jira ticket URL or ID | Same as hnh-plan but fetches Jira ticket details (description, comments, linked issues) first. |
+| **hnh-plan-notion** | Share a Notion page URL | Same as hnh-plan but fetches Notion page content first. |
 | **hnh-skill-creator** | Say "create a skill" or "improve this skill" | Guided skill creation with test cases, evaluation viewer, quantitative benchmarks, and iterative improvement. Includes description optimization for better triggering accuracy. |
 
 ## Repo structure
@@ -68,6 +72,9 @@ CLAUDE.md              # Global instructions (generic, public-safe)
 skills/                # Custom skills
   hnh-pr-review/       #   PR review with parallel agents
   hnh-sentry-report/   #   Sentry issue investigation & triage
+  hnh-plan/            #   Implementation planning (plain text, shared workflow)
+  hnh-plan-jira/       #   Implementation planning (from Jira ticket)
+  hnh-plan-notion/     #   Implementation planning (from Notion page)
   hnh-backup/          #   Backup to GitHub with sanitization
   hnh-setup/           #   Workspace bootstrapping
   hnh-skill-creator/   #   Skill creation & evaluation
