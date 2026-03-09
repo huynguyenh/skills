@@ -29,7 +29,8 @@
 - `/hnh-plan-notion` — Create implementation plan from a Notion page (fetches page content first)
 - `/hnh-skill-creator` — Create, evaluate, and improve skills with test cases and benchmarks
 - `/hnh-add-knowledge` — Capture and organize knowledge by scope (global/work/personal) and domain, synced to Google Drive
-- `/hnh-gg-sheets` — Interact with Google Sheets via API (create, read, write, format, share, search). Defaults to ZenLabs Drive conventions
+- `/hnh-gg-sheets` — Interact with Google Sheets via Sheets & Drive APIs (create, read, write, format, share, search)
+- `/hnh-notion` — Interact with Notion workspace via REST API (read pages, create/update pages, query databases, manage records, search)
 
 ## API Credentials
 
