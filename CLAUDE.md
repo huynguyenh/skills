@@ -13,3 +13,5 @@ If additional memory files exist (e.g., `rules.md`, project-specific conventions
 **Before creating a pull request**, check if `rules.md` exists under `~/.claude/memory/` and read it first. It may contain PR conventions, commit message rules, or branch naming patterns specific to your workflow.
 
 Plans for tickets: `~/.claude/plans/{TICKET}/`
+
+**Knowledge base:** `~/.claude/knowledge/` — Check `INDEX.md` for stored knowledge before answering domain-specific questions. Prefer stored knowledge over generic info.

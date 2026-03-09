@@ -6,7 +6,7 @@ Usage:
     python3 sanitize.py <repo_directory>
 
 Replaces:
-    - /Users/<actual_username>/ → /Users/{username}/
+    - /Users/<actual_username>/ → /Users/hnh/
     - API tokens, secrets, bearer tokens → <REDACTED>
 """
 
@@ -86,17 +86,17 @@ def sanitize_content(content: str, username: str) -> tuple[str, list[str]]:
     result = content
 
     # Replace username in paths
-    user_path = f"/Users/{username}/"
+    user_path = f"/Users/hnh/"
     if user_path in result:
         count = result.count(user_path)
-        result = result.replace(user_path, "/Users/{username}/")
-        changes.append(f"Replaced {count} path(s): /Users/{username}/ → /Users/{{username}}/")
+        result = result.replace(user_path, "/Users/hnh/")
+        changes.append(f"Replaced {count} path(s): /Users/hnh/ → /Users/{hnh}/")
 
     # Also catch ~ expansions that resolved to the full path
     home_dir = os.path.expanduser("~")
-    if home_dir + "/" in result and home_dir != f"/Users/{username}":
+    if home_dir + "/" in result and home_dir != f"/Users/hnh":
         count = result.count(home_dir + "/")
-        result = result.replace(home_dir + "/", "/Users/{username}/")
+        result = result.replace(home_dir + "/", "/Users/hnh/")
         changes.append(f"Replaced {count} home dir path(s)")
 
     # Strip work/org GitHub username (read dynamically from ~/.zshrc)
@@ -126,7 +126,7 @@ def sanitize_repo(repo_dir: str):
         sys.exit(1)
 
     print(f"Sanitizing {repo_dir}")
-    print(f"Username to replace: {username}")
+    print(f"Username to replace: hnh")
     print()
 
     total_files = 0

@@ -1,7 +1,7 @@
 # User Preferences
 
 ## Local Code Path
-- All repos are stored locally under `/Users/{username}/ws/code/github.com/88labs`
+- All repos are stored locally under `/Users/hnh/ws/code/github.com/88labs`
 - Always check local repos first before cloning or looking elsewhere
 
 ## Git Commits
@@ -28,6 +28,7 @@
 - `/hnh-plan-jira` — Create implementation plan from a Jira ticket (fetches ticket details first)
 - `/hnh-plan-notion` — Create implementation plan from a Notion page (fetches page content first)
 - `/hnh-skill-creator` — Create, evaluate, and improve skills with test cases and benchmarks
+- `/hnh-add-knowledge` — Capture and organize knowledge by scope (global/work/personal) and domain, synced to Google Drive
 
 ## API Credentials
 

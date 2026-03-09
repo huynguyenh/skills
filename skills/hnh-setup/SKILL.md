@@ -16,7 +16,7 @@ Bootstrap or update a Claude workspace on any machine. The user works across mul
 ## Repo structure
 
 ```
-CLAUDE.md              # global index (with {username} placeholders)
+CLAUDE.md              # global index (with hnh placeholders)
 skills/                # custom Claude skills
   hnh-setup/
   hnh-backup/
@@ -40,7 +40,7 @@ config/                # portable config files
 USERNAME=$(whoami)
 ```
 
-This username replaces all `{username}` placeholders in restored files. The key path pattern is `/Users/{username}/` — every machine will have a different username but the same directory layout underneath.
+This username replaces all `hnh` placeholders in restored files. The key path pattern is `/Users/hnh/` — every machine will have a different username but the same directory layout underneath.
 
 ## Step 2: Determine first-time vs update
 
@@ -93,8 +93,8 @@ Create `~/.claude/memory/MEMORY.md` if it doesn't exist — an empty starting po
 This is the top-level index for persistent memory. Add observations, preferences, and learnings here.
 
 ## Local Code Path
-- All repos stored under `/Users/{username}/ws/code/`
-- Documents stored under `/Users/{username}/ws/docs/`
+- All repos stored under `/Users/hnh/ws/code/`
+- Documents stored under `/Users/hnh/ws/docs/`
 
 ## Custom Skills
 - `/hnh-setup` — Bootstrap or update this workspace
@@ -191,12 +191,12 @@ Use `~/.claude/statusline-command.sh` (not an absolute path with the username) s
 
 ## Step 6: Desanitize paths
 
-The backup repo stores paths with `{username}` as a placeholder. Replace them with the actual local username across all restored files.
+The backup repo stores paths with `hnh` as a placeholder. Replace them with the actual local username across all restored files.
 
 Find all text files and replace:
-- `/Users/{username}/` → `/Users/$USERNAME/`
+- `/Users/hnh/` → `/Users/$USERNAME/`
 
-Use `grep -rl '{username}'` to find files that need updating, then `sed -i '' "s|{username}|$USERNAME|g"` on each. Apply to:
+Use `grep -rl 'hnh'` to find files that need updating, then `sed -i '' "s|hnh|$USERNAME|g"` on each. Apply to:
 - `~/.claude/CLAUDE.md`
 - `~/.claude/skills/hnh-*` (custom skills)
 - `~/.claude/plans/`

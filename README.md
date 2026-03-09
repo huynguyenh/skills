@@ -64,6 +64,7 @@ export GITHUB_WORK_USERNAME="your-github-username"
 | **hnh-plan-jira** | Share a Jira ticket URL or ID | Same as hnh-plan but fetches Jira ticket details (description, comments, linked issues) first. |
 | **hnh-plan-notion** | Share a Notion page URL | Same as hnh-plan but fetches Notion page content first. |
 | **hnh-skill-creator** | Say "create a skill" or "improve this skill" | Guided skill creation with test cases, evaluation viewer, quantitative benchmarks, and iterative improvement. Includes description optimization for better triggering accuracy. |
+| **hnh-add-knowledge** | Share a fact, tip, or lesson learned | Captures knowledge into a structured base organized by scope (global/work/personal) and domain. Auto-classifies entries, maintains an index, and syncs to Google Drive. |
 
 ## Repo structure
 
@@ -78,6 +79,7 @@ skills/                # Custom skills
   hnh-backup/          #   Backup to GitHub with sanitization
   hnh-setup/           #   Workspace bootstrapping
   hnh-skill-creator/   #   Skill creation & evaluation
+  hnh-add-knowledge/   #   Knowledge base capture & organization
 memory/                # Persistent memory (preferences, indexes)
 rules/                 # Global rules (git, credentials, workspace)
 ```

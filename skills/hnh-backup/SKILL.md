@@ -143,7 +143,7 @@ python3 ~/.claude/skills/hnh-backup/scripts/sanitize.py "$REPO"
 The script handles:
 
 **Path replacement:**
-- `/Users/<actual_username>/` → `/Users/{username}/`
+- `/Users/<actual_username>/` → `/Users/hnh/`
 
 **Credential patterns to strip** (replaced with `<REDACTED>`):
 - API tokens (`JIRA_API_TOKEN=...`, `SENTRY_AUTH_TOKEN=...`, `ESA_ACCESS_TOKEN=...`, `GH_TOKEN=...`)
