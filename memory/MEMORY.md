@@ -34,6 +34,9 @@
 - `/hnh-notion` — Interact with Notion (read/create/update pages, query databases, search workspace)
 - `/hnh-discord` — Interact with Discord (read/send messages, search, react, threads, manage channels)
 - `/hnh-maintain-skills` — Scan all custom skills for improvement opportunities and fix inconsistencies
+- `/hnh-design-guideline` — ZenLabs brand design system (colors, typography, spacing, logos) for all visual outputs
+- `/hnh-dify` — Interact with Dify.ai (run workflows, chat with apps, manage knowledge bases, view logs)
+- `/hnh-gg-docs` — Interact with Google Docs (read, create, append text, find-and-replace, metadata)
 
 ## API Credentials
 

@@ -98,6 +98,10 @@ to that API.
 The registry currently tracks:
 - **hnh-notion** → Notion API (`api.notion.com`)
 - **hnh-gg-sheets** → Google Sheets & Drive API (`googleapis.com`)
+- **hnh-gg-docs** → Google Docs API (`docs.googleapis.com`)
+- **hnh-gg-drive** → Google Drive API (`drive.googleapis.com`)
+- **hnh-dify** → Dify API (`dify.*/v1`)
+- **hnh-discord** → Discord API (`discord.com/api`)
 
 To add a new wrapper, add an entry to `api_wrappers` in the script with:
 - `service`: Human-readable API name

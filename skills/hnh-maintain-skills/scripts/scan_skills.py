@@ -83,6 +83,57 @@ def build_capability_registry(all_skills):
                 "format cells", "share", "search sheets",
             ],
         },
+        "hnh-gg-docs": {
+            "service": "Google Docs API",
+            "cli_tool": "~/.claude/skills/hnh-gg-docs/scripts/gdocs.py",
+            "api_patterns": [
+                r"curl\s+.*googleapis\.com/.*documents",
+                r"docs\.googleapis\.com",
+            ],
+            "capabilities": [
+                "read document", "create document", "append text",
+                "find and replace", "get metadata", "search documents",
+            ],
+        },
+        "hnh-gg-drive": {
+            "service": "Google Drive API",
+            "cli_tool": "~/.claude/skills/hnh-gg-drive/scripts/drive.py",
+            "api_patterns": [
+                r"curl\s+.*googleapis\.com/.*drive",
+                r"curl\s+.*drive\.googleapis\.com",
+                r"googleapis\.com/upload/drive",
+            ],
+            "capabilities": [
+                "list files", "search files", "upload", "download",
+                "move", "copy", "rename", "trash", "create folder",
+            ],
+        },
+        "hnh-dify": {
+            "service": "Dify API",
+            "cli_tool": "~/.claude/skills/hnh-dify/scripts/dify.py",
+            "api_patterns": [
+                r"curl\s+.*dify\..*/v1",
+                r"curl\s+.*api/v1/workflows",
+                r"curl\s+.*api/v1/chat-messages",
+                r"curl\s+.*api/v1/datasets",
+            ],
+            "capabilities": [
+                "run workflow", "chat with app", "manage knowledge base",
+                "view logs", "upload files", "manage conversations",
+            ],
+        },
+        "hnh-discord": {
+            "service": "Discord API",
+            "cli_tool": "~/.claude/skills/hnh-discord/scripts/discord_api.py",
+            "api_patterns": [
+                r"curl\s+.*discord\.com/api",
+                r"curl\s+.*discordapp\.com/api",
+            ],
+            "capabilities": [
+                "read messages", "send messages", "search", "react",
+                "pin", "manage threads", "browse channels",
+            ],
+        },
     }
 
     for skill_name, info in api_wrappers.items():
