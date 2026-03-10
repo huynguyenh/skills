@@ -45,7 +45,7 @@ Skills that call external APIs expect env vars like these:
 ```bash
 # Example — adjust for your own services
 export JIRA_BASE_URL="https://your-org.atlassian.net"
-export JIRA_EMAIL="you@company.com"
+export JIRA_EMAIL="<email>"
 export JIRA_API_TOKEN="your-token"
 export ESA_ACCESS_TOKEN="your-token"
 export NOTION_API_TOKEN="your-notion-token"
@@ -73,6 +73,7 @@ export GITHUB_WORK_USERNAME="your-github-username"
 | **hnh-discord** | Say "in Discord", "on Discord", "post to Discord", or share a Discord link | Interact with Discord — read/send messages, search, react, pin, manage threads, browse channels and members via the Discord Bot API. |
 | **hnh-gg-docs** | Say "Google Doc", share a docs.google.com URL, or mention creating/reading docs in Google Drive | Interact with Google Docs — read content, create documents, append text, find-and-replace, and get document metadata via the Google Docs API. |
 | **hnh-maintain-skills** | Say "maintain skills", "skill audit", or "review skills" | Scans all custom skills for improvement opportunities — detects raw API calls replaceable by wrapper skills, stale file references, credential anti-patterns, missing cross-references, and duplicated logic. |
+| **hnh-wbs** | Say "WBS", "scope this project", "break this down", or share a project brief | CTO-level Work Breakdown Structure generator — evaluates multiple technical approaches across the full SDLC, recommends the best option, and produces a branded PDF. Supports scope mode (no estimates) and estimate mode (AI-augmented man-day estimates). |
 
 ## Repo structure
 
@@ -96,6 +97,7 @@ skills/                # Custom skills
   hnh-report-sentry/   #   Sentry issue investigation & triage
   hnh-review-pr/       #   PR review with parallel agents
   hnh-setup/           #   Workspace bootstrapping
+  hnh-wbs/             #   CTO-level WBS generator with branded PDF
 memory/                # Persistent memory (preferences, indexes)
 rules/                 # Global rules (git, credentials, workspace)
 ```

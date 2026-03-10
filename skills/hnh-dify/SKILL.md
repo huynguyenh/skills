@@ -31,13 +31,13 @@ Add to `~/.zshrc`:
 
 ```bash
 # Default app key (your primary workflow/app)
-export DIFY_API_KEY="app-xxxxxxxxxxxxxxxxxxxxxxxx"
+export DIFY_API_KEY=<REDACTED>
 
 # Dataset API key (for knowledge base operations)
-export DIFY_DATASET_API_KEY="dataset-xxxxxxxxxxxxxxxxxxxxxxxx"
+export DIFY_DATASET_API_KEY=<REDACTED>
 
 # Optional: named app keys for specific apps
-# export DIFY_APP_MYBOT_API_KEY="app-yyyyyyyyyyyyyyyyyyyyyyyy"
+# export DIFY_APP_MYBOT_API_KEY=<REDACTED>
 ```
 
 **Where to find your keys:**

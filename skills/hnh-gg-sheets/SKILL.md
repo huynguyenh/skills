@@ -133,7 +133,7 @@ Multiple flags can be combined in one call.
 
 ```bash
 python3 <script> share SPREADSHEET_ID \
-  --email "someone@example.com" \
+  --email "<email>" \
   --role writer
 ```
 

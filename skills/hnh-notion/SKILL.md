@@ -180,7 +180,7 @@ When setting properties in `create`, `update`, `create-record`, or `update-recor
   "Status Prop":    {"status": {"name": "In progress"}},
   "Date Prop":      {"date": {"start": "2026-03-15", "end": "2026-03-20"}},
   "URL Prop":       {"url": "https://example.com"},
-  "Email Prop":     {"email": "user@example.com"},
+  "Email Prop":     {"email": "<email>"},
   "Phone Prop":     {"phone_number": "+1234567890"},
   "People Prop":    {"people": [{"id": "USER_ID"}]},
   "Relation Prop":  {"relation": [{"id": "PAGE_ID"}]}

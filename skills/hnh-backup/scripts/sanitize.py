@@ -8,6 +8,9 @@ Usage:
 Replaces:
     - /Users/<actual_username>/ → /Users/hnh/
     - API tokens, secrets, bearer tokens → <REDACTED>
+    - Email addresses → <email>
+    - Company/org-specific identifiers → generic placeholders
+    - Strips entire sections from MEMORY.md that contain sensitive info
 """
 
 import os
@@ -31,103 +34,153 @@ def get_github_work_username():
     return None
 
 
+# Sections in MEMORY.md that contain company/credential info and should be stripped.
+MEMORY_STRIP_SECTIONS = [
+    "API Credentials",
+    "Sentry",
+    "Google Drive",
+    "88labs Repository Architecture",
+    "Service Mapping",
+    "Andpad Vanguard Backend",
+    "Rules & Conventions",
+]
+
+# Company/org-specific identifiers to redact across all files
+ORG_REDACT_PATTERNS = [
+    (re.compile(r'andpad-dev\.sentry\.io'), '<sentry-url>'),
+    (re.compile(r'SENTRY_ORG=<redacted>'), 'SENTRY_ORG=<redacted>'),
+    (re.compile(r'i-destiny-\d+'), '<gcp-project>'),
+    (re.compile(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'), '<email>'),
+]
+
 # Patterns that indicate a credential value to redact
 CREDENTIAL_PATTERNS = [
-    # API tokens in key=value or key: value format
     (r'((?:API_TOKEN|AUTH_TOKEN|ACCESS_TOKEN|SECRET_KEY|API_KEY|GH_TOKEN|GITHUB_TOKEN)\s*[=:]\s*)["\']?([A-Za-z0-9_\-/.+=]{20,})["\']?',
      r'\1<REDACTED>'),
-    # Bearer tokens
     (r'(Bearer\s+)[A-Za-z0-9_\-/.+=]{20,}',
      r'\1<REDACTED>'),
-    # GitHub PATs
     (r'(ghp_|gho_|github_pat_)[A-Za-z0-9_]{20,}',
      r'<REDACTED>'),
-    # Generic token= patterns (be conservative — only long values)
     (r'(token["\s]*[=:]["\s]*)[A-Za-z0-9_\-/.+=]{30,}',
      r'\1<REDACTED>'),
-    # curl -H "Authorization: ..." headers
     (r'(Authorization:\s*(?:Bearer|token)\s+)[A-Za-z0-9_\-/.+=]{20,}',
      r'\1<REDACTED>'),
 ]
 
-# File extensions to process (skip binaries)
 TEXT_EXTENSIONS = {
     '.md', '.txt', '.json', '.yaml', '.yml', '.toml', '.cfg', '.ini',
     '.sh', '.bash', '.zsh', '.py', '.rb', '.js', '.ts', '.go',
     '.env', '.conf', '.xml', '.html', '.css', ''
 }
 
-# Files to skip entirely
 SKIP_FILES = {
     '.git', '.DS_Store', 'node_modules', '__pycache__',
 }
 
 
-def is_text_file(path: Path) -> bool:
-    """Check if a file should be processed as text."""
+def is_text_file(path):
     if path.suffix.lower() in TEXT_EXTENSIONS:
         return True
-    # No extension — check if it looks like text
     if path.suffix == '':
         try:
             with open(path, 'rb') as f:
                 chunk = f.read(512)
-                return b'\x00' not in chunk  # binary files usually have null bytes
+                return b'\x00' not in chunk
         except (IOError, OSError):
             return False
     return False
 
 
-def sanitize_content(content: str, username: str) -> tuple[str, list[str]]:
-    """
-    Sanitize file content. Returns (sanitized_content, list_of_changes).
-    """
+def strip_memory_sections(content):
+    """Strip entire sections from MEMORY.md that contain sensitive info."""
+    changes = []
+    lines = content.split('\n')
+    result_lines = []
+    skip_until_level = None
+
+    for line in lines:
+        heading_match = re.match(r'^(#{1,6})\s+(.+)$', line)
+
+        if heading_match:
+            level = len(heading_match.group(1))
+            title = heading_match.group(2).strip()
+
+            if skip_until_level is not None and level <= skip_until_level:
+                skip_until_level = None
+
+            if any(section.lower() in title.lower() for section in MEMORY_STRIP_SECTIONS):
+                skip_until_level = level
+                changes.append("Stripped section: '{}'".format(title))
+                continue
+
+        if skip_until_level is not None:
+            continue
+
+        result_lines.append(line)
+
+    cleaned = re.sub(r'\n{3,}', '\n\n', '\n'.join(result_lines))
+    return cleaned, changes
+
+
+def sanitize_content(content, username):
     changes = []
     result = content
 
-    # Replace username in paths
-    user_path = f"/Users/hnh/"
-    if user_path in result:
+    user_path = "/Users/{}/".format(username)
+    if user_path in result and username != "hnh":
         count = result.count(user_path)
         result = result.replace(user_path, "/Users/hnh/")
-        changes.append(f"Replaced {count} path(s): /Users/{username}/ → /Users/hnh/")
+        changes.append("Replaced {} path(s): /Users/{}/ -> /Users/hnh/".format(count, username))
 
-    # Also catch ~ expansions that resolved to the full path
     home_dir = os.path.expanduser("~")
-    if home_dir + "/" in result and home_dir != f"/Users/hnh":
+    if home_dir + "/" in result and home_dir != "/Users/hnh":
         count = result.count(home_dir + "/")
         result = result.replace(home_dir + "/", "/Users/hnh/")
-        changes.append(f"Replaced {count} home dir path(s)")
+        changes.append("Replaced {} home dir path(s)".format(count))
 
-    # Strip work/org GitHub username (read dynamically from ~/.zshrc)
     gh_work_user = get_github_work_username()
     if gh_work_user and gh_work_user in result:
         count = result.count(gh_work_user)
         result = result.replace(gh_work_user, "{github_work_username}")
-        changes.append(f"Replaced {count} GitHub work username(s) → {{github_work_username}}")
+        changes.append("Replaced {} GitHub work username(s)".format(count))
 
-    # Apply credential patterns
+    for pattern, replacement in ORG_REDACT_PATTERNS:
+        matches = pattern.findall(result)
+        if matches:
+            result = pattern.sub(replacement, result)
+            changes.append("Redacted {} org-specific pattern(s): {}".format(len(matches), replacement))
+
     for pattern, replacement in CREDENTIAL_PATTERNS:
         matches = re.findall(pattern, result)
         if matches:
             result = re.sub(pattern, replacement, result)
-            changes.append(f"Redacted credential matching: {pattern[:40]}...")
+            changes.append("Redacted credential matching: {}...".format(pattern[:40]))
 
     return result, changes
 
 
-def sanitize_repo(repo_dir: str):
-    """Walk the repo directory and sanitize all text files."""
+def sanitize_repo(repo_dir):
     repo_path = Path(repo_dir)
     username = get_username()
 
     if not repo_path.exists():
-        print(f"Error: Directory {repo_dir} does not exist")
+        print("Error: Directory {} does not exist".format(repo_dir))
         sys.exit(1)
 
-    print(f"Sanitizing {repo_dir}")
-    print(f"Username to replace: hnh")
+    print("Sanitizing {}".format(repo_dir))
+    print("Username to replace: {}".format(username))
     print()
+
+    # Special handling for MEMORY.md — strip sensitive sections first
+    memory_path = repo_path / "memory" / "MEMORY.md"
+    if memory_path.exists():
+        content = memory_path.read_text(encoding='utf-8')
+        stripped, strip_changes = strip_memory_sections(content)
+        if strip_changes:
+            memory_path.write_text(stripped, encoding='utf-8')
+            print("  MEMORY.md section stripping:")
+            for change in strip_changes:
+                print("    - {}".format(change))
 
     total_files = 0
     modified_files = 0
@@ -135,7 +188,6 @@ def sanitize_repo(repo_dir: str):
     warnings = []
 
     for root, dirs, files in os.walk(repo_path):
-        # Skip .git and other irrelevant dirs
         dirs[:] = [d for d in dirs if d not in SKIP_FILES]
 
         for filename in files:
@@ -161,25 +213,25 @@ def sanitize_repo(repo_dir: str):
                 modified_files += 1
                 rel_path = filepath.relative_to(repo_path)
                 all_changes.append((str(rel_path), changes))
-                print(f"  Modified: {rel_path}")
+                print("  Modified: {}".format(rel_path))
                 for change in changes:
-                    print(f"    - {change}")
+                    print("    - {}".format(change))
 
     print()
-    print(f"Scanned {total_files} files, modified {modified_files}")
+    print("Scanned {} files, modified {}".format(total_files, modified_files))
 
     if warnings:
         print()
         print("WARNINGS:")
         for w in warnings:
-            print(f"  ! {w}")
+            print("  ! {}".format(w))
 
     return modified_files, all_changes, warnings
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print(f"Usage: {sys.argv[0]} <repo_directory>")
+        print("Usage: {} <repo_directory>".format(sys.argv[0]))
         sys.exit(1)
 
     sanitize_repo(sys.argv[1])

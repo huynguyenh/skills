@@ -11,7 +11,7 @@ Bootstrap or update a Claude workspace on any machine. The user works across mul
 
 - **Backup repo:** `https://github.com/huynguyenh/skills`
 - **GitHub account:** `huynguyenh` (the user may have other GitHub accounts on the device — always use this one)
-- **Git identity:** `user.name "huynguyenh"`, `user.email "hoanghuy2908@gmail.com"`
+- **Git identity:** `user.name "huynguyenh"`, `user.email "<email>"`
 
 ## Repo structure
 

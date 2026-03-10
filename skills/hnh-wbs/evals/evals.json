@@ -1,0 +1,50 @@
+{
+  "skill_name": "hnh-wbs",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We need to build a mobile ordering app for a Vietnamese restaurant chain (5 locations). Customers order food, pay online, earn loyalty points. Staff sees orders in real-time on tablets. We want both iOS and Android. Break this down for me.",
+      "expected_output": "A branded WBS PDF covering full SDLC at module level, scope mode (no estimates), with technical feasibility assessment and multiple approach evaluation",
+      "files": [],
+      "assertions": [
+        {"name": "produces-pdf", "description": "A PDF file exists in the outputs directory"},
+        {"name": "covers-all-sdlc-stages", "description": "WBS covers all 6 SDLC stages"},
+        {"name": "module-level-granularity", "description": "Items are module-level not task-level"},
+        {"name": "evaluates-multiple-approaches", "description": "At least 2 approaches analyzed"},
+        {"name": "technical-feasibility-present", "description": "Feasibility assessment exists"},
+        {"name": "brand-compliant-no-red", "description": "Uses ZenLabs palette, no red"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Our client wants an HR management platform for mid-size companies (50-500 employees). Core features: employee directory, leave management, payroll integration (with local Vietnamese payroll providers), performance reviews, org chart. They want a web app + mobile app. The team is 3 devs + 1 designer. Can you scope this with estimates? We need to know timeline and effort.",
+      "expected_output": "A branded WBS PDF in estimate mode with man-day estimates per module, critical path timeline, covering full SDLC at module level",
+      "files": [],
+      "assertions": [
+        {"name": "produces-pdf", "description": "A PDF file exists in the outputs directory"},
+        {"name": "covers-all-sdlc-stages", "description": "WBS covers all 6 SDLC stages"},
+        {"name": "module-level-granularity", "description": "Items are module-level not task-level"},
+        {"name": "evaluates-multiple-approaches", "description": "At least 2 approaches analyzed"},
+        {"name": "technical-feasibility-present", "description": "Feasibility assessment exists"},
+        {"name": "brand-compliant-no-red", "description": "Uses ZenLabs palette, no red"},
+        {"name": "includes-man-day-estimates", "description": "Each module has man-day estimates"},
+        {"name": "shows-total-timeline", "description": "Total timeline or critical path included"}
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Client wants an AI-powered analytics dashboard. They have some data in spreadsheets and want to ask questions about it in natural language. Should be fast. Budget is tight.",
+      "expected_output": "CTO challenge pushing back on the vague brief, then after clarification a branded WBS PDF with feasibility assessment and multiple approaches evaluated",
+      "files": [],
+      "assertions": [
+        {"name": "produces-pdf", "description": "A PDF file exists in the outputs directory"},
+        {"name": "covers-all-sdlc-stages", "description": "WBS covers all 6 SDLC stages"},
+        {"name": "module-level-granularity", "description": "Items are module-level not task-level"},
+        {"name": "evaluates-multiple-approaches", "description": "At least 2 approaches analyzed"},
+        {"name": "technical-feasibility-present", "description": "Feasibility assessment exists"},
+        {"name": "brand-compliant-no-red", "description": "Uses ZenLabs palette, no red"},
+        {"name": "challenges-vague-brief", "description": "CTO challenge identifies specific gaps in the vague brief"}
+      ]
+    }
+  ]
+}

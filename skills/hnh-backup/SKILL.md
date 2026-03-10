@@ -12,7 +12,7 @@ Back up the portable parts of the Claude workspace to GitHub, stripping credenti
 - **Remote:** `https://github.com/huynguyenh/skills`
 - **Local clone:** `~/ws/code/github.com/huynguyenh/skills`
 - **GitHub account:** `huynguyenh` — the user may have other GitHub accounts configured on this device. Always verify and use huynguyenh specifically.
-- **Git identity:** `user.name "huynguyenh"`, `user.email "hoanghuy2908@gmail.com"`
+- **Git identity:** `user.name "huynguyenh"`, `user.email "<email>"`
 
 ## What gets backed up
 
@@ -88,9 +88,9 @@ cd ~/ws/code/github.com/huynguyenh/skills && git pull
 Set the git remote to explicitly use the huynguyenh account (important on multi-account machines):
 
 ```bash
-git remote set-url origin https://huynguyenh@github.com/huynguyenh/skills.git
+git remote set-url origin https://<email>/huynguyenh/skills.git
 git config user.name "huynguyenh"
-git config user.email "hoanghuy2908@gmail.com"
+git config user.email "<email>"
 ```
 
 ## Step 3: Identify skills to back up

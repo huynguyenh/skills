@@ -150,7 +150,7 @@ python3 <script> restore FILE_ID
 ### share — Share a file with someone
 
 ```bash
-python3 <script> share FILE_ID --email someone@example.com --role writer
+python3 <script> share FILE_ID --email <email> --role writer
 ```
 
 | Flag | Default | What it does |
