@@ -1,0 +1,41 @@
+{
+  "eval_name": "vague-ai-dashboard",
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "produces-pdf",
+      "passed": true,
+      "evidence": "The file wbs_ai_analytics_dashboard.pdf exists in the outputs directory (14.5KB, 6 pages, A4 format). Generated using reportlab via generate_wbs_pdf.py."
+    },
+    {
+      "text": "covers-all-sdlc-stages",
+      "passed": false,
+      "evidence": "The WBS has 8 phases: Project Management, Data Ingestion & Storage, Natural Language Query Engine, Frontend/Dashboard UI, Backend API & Infrastructure, Testing & QA, Deployment & DevOps, Documentation & Handoff. Mapping to the 6 required SDLC stages: Discovery is partially covered by Phase 1 (Project Management with kickoff, requirements gathering). Design has no dedicated phase — there is no UI/UX design, architecture design, or system design phase; database schema design (2.3) is a single work package within Data Ingestion, not a standalone design stage. Development is covered by Phases 2-5. QA is covered by Phase 6. Deployment is covered by Phase 7. Maintenance is NOT covered — Phase 8 is Documentation & Handoff, which is about closing out the project, not ongoing maintenance, monitoring, bug fixes, or iterative improvements post-launch. Missing dedicated Design and Maintenance stages means only 4 of 6 required SDLC stages are clearly covered."
+    },
+    {
+      "text": "module-level-granularity",
+      "passed": true,
+      "evidence": "WBS items are at module/component level rather than individual task level. Examples: 'File Upload Interface', 'Data Parsing & Normalization', 'LLM Integration Layer', 'Schema-Aware Prompt Engineering', 'Text-to-SQL Pipeline', 'Query Interface', 'Results Display (Charts)', 'CI/CD Pipeline'. Each work package represents a functional module or component, not a granular task like 'write unit test for X' or 'create database migration script'."
+    },
+    {
+      "text": "evaluates-multiple-approaches",
+      "passed": false,
+      "evidence": "The document does not present multiple distinct technical approaches with tradeoff analysis. It mentions a single approach: Text-to-SQL via LLM API (OpenAI) with a specific stack (Next.js + Tailwind + PostgreSQL + Vercel). The chat_summary.md notes 'Text-to-SQL via LLM is the most pragmatic approach compared to training custom models' but this comparison is not in the PDF itself, and there is no structured analysis of alternatives (e.g., RAG-based approach, semantic search, fine-tuned model, vector DB approach) with pros/cons/tradeoffs for each."
+    },
+    {
+      "text": "technical-feasibility-present",
+      "passed": false,
+      "evidence": "The PDF does not contain a dedicated feasibility assessment section. While assumptions touch on feasibility implicitly (e.g., 'volume under 100 MB', 'sub-3-second query response', 'open-source stack'), there is no explicit evaluation of whether major requirements are technically feasible, what the risks are, or what constraints could block delivery. The document assumes everything is feasible and proceeds to plan, rather than analyzing feasibility of key requirements like NL query accuracy, performance targets, or budget constraints."
+    },
+    {
+      "text": "brand-compliant-no-red",
+      "passed": false,
+      "evidence": "The PDF uses a generic navy/blue/gold color palette (DARK_NAVY #1B2A4A, MID_BLUE #2E5090, LIGHT_BLUE #4A90D9, ACCENT_GOLD #D4A843), which is not ZenLabs brand colors. There is no mention of ZenLabs anywhere in the document or generation script. While no red is used for risk/error indicators (satisfying the 'no red' part), the colors are not ZenLabs brand-compliant since there is no evidence of ZenLabs branding being applied. The assertion requires ZenLabs brand colors AND no red — the first condition fails."
+    },
+    {
+      "text": "challenges-vague-brief",
+      "passed": true,
+      "evidence": "The document explicitly identifies gaps in the vague brief. The Assumptions section calls out 7 interpretive assumptions made due to vagueness (e.g., interpreting 'fast' as sub-3-second, 'tight budget' as 1-2 devs with open-source stack). The Open Questions/Unknowns section lists 6 specific gaps: unknown data schemas, no budget ceiling, unclear save/share requirements, undefined authentication requirements, unknown compliance needs (GDPR/HIPAA), and unknown concurrency targets. The chat_summary further elaborates on 4 specific vagueness critiques: undefined data scope, undefined accuracy bar for NL queries, unquantified SLA for 'fast', and no actual budget number. This constitutes identifying missing requirements, unclear scope, and unspecified tech constraints."
+    }
+  ]
+}

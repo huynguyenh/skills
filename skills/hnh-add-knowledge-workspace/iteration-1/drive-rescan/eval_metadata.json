@@ -1,0 +1,32 @@
+{
+  "eval_id": 2,
+  "eval_name": "drive-rescan",
+  "prompt": "can you rescan our google drive and update the knowledge base? i think we added some new folders recently",
+  "assertions": [
+    {
+      "name": "calls-drive-api",
+      "description": "Agent actually calls the Drive API to list the current folder structure rather than just using cached KB data",
+      "type": "process"
+    },
+    {
+      "name": "compares-against-kb",
+      "description": "Explicitly compares fetched Drive data against what personal/zenlabs.md currently says",
+      "type": "output"
+    },
+    {
+      "name": "produces-diff-report",
+      "description": "Generates a structured reconciliation report showing unchanged/new/changed/outdated entries",
+      "type": "output"
+    },
+    {
+      "name": "waits-for-approval",
+      "description": "Presents the changes and asks for user approval before applying (or in this test, indicates it would ask)",
+      "type": "output"
+    },
+    {
+      "name": "handles-structural-changes",
+      "description": "Detects any new folders, renamed folders, or changed folder IDs in the Drive",
+      "type": "output"
+    }
+  ]
+}

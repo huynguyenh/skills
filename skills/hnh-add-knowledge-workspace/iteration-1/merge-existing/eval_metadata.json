@@ -1,0 +1,32 @@
+{
+  "eval_id": 3,
+  "eval_name": "merge-existing",
+  "prompt": "note that Hào's discord ID is 1412635437901676625 and he also goes by 'Ray' sometimes. oh and his github username is haoxray",
+  "assertions": [
+    {
+      "name": "reads-existing-employee-file",
+      "description": "Agent reads personal/zenlabs-employees.md and finds Hào's existing entry",
+      "type": "process"
+    },
+    {
+      "name": "detects-discord-id-redundant",
+      "description": "Identifies that Discord ID 1412635437901676625 is already in the KB — skips or notes it as redundant",
+      "type": "output"
+    },
+    {
+      "name": "adds-ray-nickname",
+      "description": "Adds 'Ray' as an additional nickname to Hào's existing entry",
+      "type": "output"
+    },
+    {
+      "name": "updates-github-username",
+      "description": "Adds or updates GitHub username to 'haoxray' (existing entry has email format, user specifies username)",
+      "type": "output"
+    },
+    {
+      "name": "merges-into-existing-entry",
+      "description": "All changes are merged into the existing Hào entry rather than creating a second entry for Hào",
+      "type": "output"
+    }
+  ]
+}

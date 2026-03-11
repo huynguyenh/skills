@@ -1,0 +1,36 @@
+{
+  "eval_name": "restaurant-app-scope",
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "produces-pdf",
+      "passed": true,
+      "evidence": "PDF file 'wbs-vietnamese-restaurant-app-2026-03-10.pdf' (66.2KB, 8 pages) exists in the outputs directory."
+    },
+    {
+      "text": "covers-all-sdlc-stages",
+      "passed": true,
+      "evidence": "All 6 SDLC stages are present as WBS phases: Phase 1: Discovery & Requirements, Phase 2: System Design & Architecture, Phase 3: Development, Phase 4: Quality Assurance, Phase 5: Deployment & DevOps, Phase 6: Post-Launch & Maintenance. These map directly to Discovery, Design, Development, QA, Deployment, and Maintenance."
+    },
+    {
+      "text": "module-level-granularity",
+      "passed": true,
+      "evidence": "WBS items are consistently at module level: Authentication Module, Location Module, Menu Management Module, Order Module, Payment Module, Loyalty Module, Real-Time Notification Module, Admin Module, Customer App: Onboarding, Customer App: Menu Browsing, Staff Tablet App: Order Dashboard, etc. No task-level items like 'create login button' appear. 32 modules total across all phases."
+    },
+    {
+      "text": "evaluates-multiple-approaches",
+      "passed": true,
+      "evidence": "The Approach Analysis section evaluates multiple options with tradeoffs for at least 3 decision areas: Mobile Framework (Native Swift+Kotlin vs React Native vs Flutter -- compared on Quality, Time, Budget), Backend Architecture (Modular Monolith NestJS vs Microservices vs BaaS Firebase/Supabase), and Database (PostgreSQL+Redis vs MongoDB vs Firebase Firestore). Each includes pros/cons and a recommendation. Additional decisions for Payment, Real-Time, Loyalty, and Push Notifications are also documented with rationale."
+    },
+    {
+      "text": "technical-feasibility-present",
+      "passed": true,
+      "evidence": "Page 2 contains a dedicated 'Technical Feasibility' section with a structured table assessing 7 major requirements: Cross-platform mobile app (Viable), Online payment processing (Viable), Real-time order updates (Viable), Loyalty points system (Viable), Multi-location menu management (Needs POC), POS system integration (Needs POC), Offline resilience for staff tablets (Viable). Each has feasibility status and detailed technical notes."
+    },
+    {
+      "text": "brand-compliant-no-red",
+      "passed": true,
+      "evidence": "PDF uses ZenLabs brand colors throughout: dark teal/green (#1a5c4c approximately) for the cover page background, table headers, and section headings. ZenLabs logo is placed on the cover page. Risk indicators in the Risk Register and WBS module tables use text labels ('Low', 'Medium', 'High') with light yellow/cream row highlighting for medium-risk items -- no red coloring is used anywhere for risk or error indicators. The color palette is limited to teal green, white, and subtle yellow/cream accents."
+    }
+  ]
+}

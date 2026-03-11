@@ -1,0 +1,21 @@
+[
+  {"query": "hey btw the ZenLabs Notion workspace token changed, the new one is ntn_abc123xyz — can you update that?", "should_trigger": true},
+  {"query": "I just realized our Google Drive has a new folder called '8. Templates' that we set up last week for client onboarding docs. Can you add it to the knowledge base?", "should_trigger": true},
+  {"query": "rescan our google drive and notion and make sure the knowledge base is up to date with everything ZenLabs related", "should_trigger": true},
+  {"query": "note that when deploying our Go services we always use multi-stage Docker builds with alpine base images — its a team convention at 88labs", "should_trigger": true},
+  {"query": "oh I learned something interesting today — if you set GOMAXPROCS to match your container CPU limit, Go apps run way more predictably in k8s", "should_trigger": true},
+  {"query": "we just hired a new developer named Minh, her email is <email> and she's starting next Monday as a full-stack dev", "should_trigger": true},
+  {"query": "can you audit my knowledge base? I feel like some of the Drive folder IDs might be stale since we reorganized things last month", "should_trigger": true},
+  {"query": "btw our Sentry project slug is actually 'gmd-tms-api' not 'gmd-tms-backend', we renamed it when we split the services", "should_trigger": true},
+  {"query": "sync up our knowledge — I've been making changes to the ZenLabs Drive and Notion workspace and I want to make sure Claude has the latest", "should_trigger": true},
+  {"query": "can you create a Google Sheet called 'Q1 Revenue Tracker' in the Operations folder with columns for month, revenue, expenses, and profit margin?", "should_trigger": false},
+  {"query": "review this PR for me: https://github.com/zenlbs/gmd-tms-backend/pull/47 — the auth middleware changes look suspicious", "should_trigger": false},
+  {"query": "what's the folder ID for our Contracts folder in Drive? I need to upload a new agreement there", "should_trigger": false},
+  {"query": "can you read the content of our ZenLabs Notion page about the Q1 OKRs and summarize it for me?", "should_trigger": false},
+  {"query": "help me write a Go function that validates JWT tokens using RS256 signing — we need it for the TMS auth service", "should_trigger": false},
+  {"query": "run my Dify workflow for content generation — the one that takes a topic and produces a blog post draft", "should_trigger": false},
+  {"query": "can you check what's in folder 1PRssu6UYsUTwxPdRtj7v2mYThnCA1ZSZ on our Drive? I want to see the current file list", "should_trigger": false},
+  {"query": "post a message to the #general channel on our Discord server saying 'standup in 5 minutes'", "should_trigger": false},
+  {"query": "back up my skills and config to GitHub — I want to make sure everything is synced before I reformat my laptop", "should_trigger": false},
+  {"query": "plan the implementation for adding webhook support to our TMS notification service — we need to support Slack, Discord, and email", "should_trigger": false}
+]

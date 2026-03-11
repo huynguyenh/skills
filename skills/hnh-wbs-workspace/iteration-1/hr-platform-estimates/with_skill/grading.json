@@ -1,0 +1,46 @@
+{
+  "eval_name": "hr-platform-estimates",
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "produces-pdf",
+      "passed": true,
+      "evidence": "PDF file 'wbs-hr-management-platform-2026-03-10.pdf' (67.1KB, 10 pages) exists in the outputs directory."
+    },
+    {
+      "text": "covers-all-sdlc-stages",
+      "passed": true,
+      "evidence": "All 6 SDLC stages are present as numbered sections: 1. Discovery & Requirements (p3), 2. System Design & Architecture (p4), 3-5. Development Phases 1-3 (p5-6), 6. Quality Assurance (p6), 7. Deployment & DevOps (p7), 8. Post-Launch & Maintenance (p7). Maps to Discovery, Design, Development, QA, Deployment, Maintenance."
+    },
+    {
+      "text": "module-level-granularity",
+      "passed": true,
+      "evidence": "WBS items are at module level: Employee Directory, Leave Management, Org Chart, Performance Reviews, Payroll Integration, Auth & User Management, Mobile App, Notification System, Admin Panel, etc. Not broken into individual developer tasks."
+    },
+    {
+      "text": "evaluates-multiple-approaches",
+      "passed": true,
+      "evidence": "Three distinct approaches analyzed on p3 with a comparison table: Option A (Modular Monolith + React Native - recommended), Option B (Microservices + Flutter - not recommended), Option C (SaaS + Customization via OrangeHRM/Odoo - not recommended). Tradeoffs evaluated across Architecture, Quality, Time Impact, Budget Impact, Team Fit, and AI Acceleration."
+    },
+    {
+      "text": "technical-feasibility-present",
+      "passed": true,
+      "evidence": "Dedicated 'Technical Feasibility' section on p2 with a table assessing 8 major requirements (Employee Directory, Leave Management, Payroll Integration, Performance Reviews, Org Chart, Web App, Mobile App, Vietnam PDPD Compliance). Each rated as 'Viable' or 'Needs POC' with detailed assessment text."
+    },
+    {
+      "text": "brand-compliant-no-red",
+      "passed": true,
+      "evidence": "PDF uses ZenLabs brand colors throughout: Emerald 900 (#04563E) for header bars, Ecru 100 (#F6F6E8) for alternating rows, Firefly 100 (#D8EDF5) light blue background for High risk, Ecru 300 (#E3E2BC) for Medium risk, Emerald 100 (#C8E6B7) for Low risk. ZenLabs logo on cover page. No red color (#FF0000 or similar) is used anywhere in the document -- High risk uses dark text on light blue background instead."
+    },
+    {
+      "text": "includes-man-day-estimates",
+      "passed": true,
+      "evidence": "Every module row in the WBS tables includes a 'Days' column with man-day estimates. Examples: Auth & User Management (10 days), Employee Directory (12 days), Leave Management (20 days), Performance Reviews (20 days), Payroll Integration (25 days). Phase totals also shown: Discovery 15, Design 12, Dev Phase 1 95, Dev Phase 2 55, Dev Phase 3 30, QA 30, Deployment 12, Post-Launch 10. Grand total: 259 man-days."
+    },
+    {
+      "text": "shows-total-timeline",
+      "passed": true,
+      "evidence": "Timeline & Effort Summary on p9 shows full project timeline with Start/End weeks per phase (Week 1 through Week 24). Critical path explicitly stated: 'Discovery -> Architecture -> Auth Module -> Employee Directory -> Leave Management -> QA -> Deployment' with total duration of 22-24 weeks. Cover page and summary table both state 22-24 weeks (~5.5-6 months). MVP delivery at Week 12, full platform at Week 22-24."
+    }
+  ]
+}

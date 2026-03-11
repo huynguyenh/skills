@@ -1,0 +1,41 @@
+{
+  "eval_name": "vague-ai-dashboard",
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "produces-pdf",
+      "passed": true,
+      "evidence": "PDF file 'wbs-ai-analytics-dashboard-2026-03-10.pdf' exists in the outputs directory (62,761 bytes, 7 pages)."
+    },
+    {
+      "text": "covers-all-sdlc-stages",
+      "passed": true,
+      "evidence": "WBS covers all 6 SDLC stages: Phase 1 Discovery & Requirements, Phase 2 System Design & Architecture, Phase 3 Development, Phase 4 Quality Assurance, Phase 5 Deployment & DevOps, Phase 6 Post-Launch & Maintenance. These map directly to the required Discovery, Design, Development, QA, Deployment, and Maintenance stages."
+    },
+    {
+      "text": "module-level-granularity",
+      "passed": true,
+      "evidence": "All 19 WBS items are at module level (e.g., 'Data Ingestion Pipeline', 'NL Query Engine', 'Dashboard Frontend', 'Authentication Module', 'API Layer'). Each module defines scope and key deliverables but does not break down into individual tasks like 'write unit test' or 'create migration'. The PDF explicitly states: 'Each module represents a deliverable unit of work.'"
+    },
+    {
+      "text": "evaluates-multiple-approaches",
+      "passed": true,
+      "evidence": "Three distinct approaches are analyzed with tradeoffs in both the PDF and chat summary: Approach A (No-Code Retool stack), Approach B (Lightweight Custom Build with Next.js + FastAPI + PostgreSQL + OpenAI -- recommended), and Approach C (AI Platform with Dify + React + PostgreSQL). Each is compared across 7 factors: Stack, Quality, Speed, Budget Fit, Demo Impact, NL Capability, and Path to Prod."
+    },
+    {
+      "text": "technical-feasibility-present",
+      "passed": true,
+      "evidence": "A dedicated 'Technical Feasibility' section in the PDF assesses 6 major requirements: (1) Natural language query over structured data -- Viable, (2) Spreadsheet data ingestion (50 files) -- Viable, (3) Real-time query responses -- Viable, (4) Dashboard with charts and KPIs -- Viable, (5) 5-10 concurrent users -- Viable, (6) $15K budget constraint -- Viable with constraints. Each includes feasibility rating and detailed notes."
+    },
+    {
+      "text": "brand-compliant-no-red",
+      "passed": true,
+      "evidence": "PDF uses ZenLabs branding throughout: logo on cover page, emerald/teal header bars with white text, green accent bar for subtitle. Risk indicators in the Risk Register use text labels (Low/Medium/High) without red color coding. The visual inspection of all 7 pages shows a color palette of greens, teals, white, and dark text with no red present. The QA pass in the chat summary confirms 'Colors: Brand palette applied correctly, no red used.'"
+    },
+    {
+      "text": "challenges-vague-brief",
+      "passed": true,
+      "evidence": "The chat summary documents a detailed CTO challenge phase (Phase 2) with 5 specific pushback areas identifying concrete gaps in the vague brief: (1) 'AI-powered analytics dashboard' is not a requirement -- conflates marketing term with tech spec, scope ranges from 2-week chatbot to 2-month NL-to-SQL engine; (2) 'Some data in spreadsheets' -- missing data volume, structure, format, update frequency, domain; (3) 'Should be fast' -- undefined whether fast to build, fast query response, or fast page load; (4) 'Budget is tight' -- no actual number, solution space ranges from $5K to $50K; (5) Hidden complexities -- authentication, authorization, data privacy, PII, accuracy requirements, deployment, maintenance are all unaddressed."
+    }
+  ]
+}

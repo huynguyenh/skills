@@ -1,0 +1,36 @@
+{
+  "eval_name": "restaurant-app-scope",
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "produces-pdf",
+      "passed": true,
+      "evidence": "File wbs_restaurant_app.pdf (22.1KB, 9 pages) exists in the outputs directory alongside generate_wbs_pdf.py and chat_summary.md."
+    },
+    {
+      "text": "covers-all-sdlc-stages",
+      "passed": true,
+      "evidence": "All 6 SDLC stages are covered: Discovery (1.0 Project Management & Planning + 2.1 Requirements Gathering), Design (2.2 UX/UI Design + 2.3 Technical Architecture), Development (3.0 Customer App, 4.0 Staff Dashboard, 5.0 Backend, 6.0 Admin Portal), QA (7.0 Quality Assurance & Testing), Deployment (8.0 Deployment & Launch), Maintenance (9.0 Post-Launch & Operations)."
+    },
+    {
+      "text": "module-level-granularity",
+      "passed": true,
+      "evidence": "Work packages are organized at module level: Authentication & Profile (3.1), Restaurant & Menu Browsing (3.2), Cart & Ordering (3.3), Payment Integration (3.4), Order Tracking (3.5), Loyalty Program (3.6), Real-Time Order Management (4.2), Core API Development (5.1), etc. These are functional modules, not individual UI tasks like 'create login button'."
+    },
+    {
+      "text": "evaluates-multiple-approaches",
+      "passed": false,
+      "evidence": "The WBS mentions technology options in passing (React Native/Flutter in task 1.3.1, Stripe/Braintree, AWS/GCP/Azure) but does not contain any analysis section comparing distinct technical approaches with tradeoffs. The chat summary notes a 'product-oriented breakdown' choice but no structured comparison of approaches exists in the PDF document."
+    },
+    {
+      "text": "technical-feasibility-present",
+      "passed": false,
+      "evidence": "No feasibility assessment section exists in the PDF. The document contains assumptions (cross-platform framework, PCI-compliant gateway, cloud hosting) and includes a risk assessment task (1.2.4) in the WBS, but no actual feasibility analysis for major requirements is present. The Notes section explicitly states 'This WBS covers scope definition only.'"
+    },
+    {
+      "text": "brand-compliant-no-red",
+      "passed": false,
+      "evidence": "The PDF does not use ZenLabs brand colors. The color scheme uses dark red (#8B0000, #B22222) as the primary/header color throughout the document, described in the code as 'Vietnamese theme'. Red is used extensively for all phase header bars, section titles, and table headers. There is no reference to ZenLabs branding anywhere in the document or generation script."
+    }
+  ]
+}

@@ -38,3 +38,5 @@
 - `/hnh-dify` — Interact with Dify.ai (run workflows, chat with apps, manage knowledge bases, view logs)
 - `/hnh-gg-docs` — Interact with Google Docs (read, create, append text, find-and-replace, metadata)
 - `/hnh-wbs` — CTO-level Work Breakdown Structure generator (SDLC coverage, multi-approach evaluation, branded PDF)
+- `/hnh-get-report` — CEO-level project status report (scans backlog, GitHub, Drive, Notion in parallel; tracks UC pipeline deltas)
+- `/hnh-record-screen` — Screen recording & video optimization (capture demos, compress MOV/MP4)

@@ -1,0 +1,32 @@
+{
+  "eval_id": 3,
+  "eval_name": "merge-existing",
+  "configuration": "old_skill",
+  "expectations": [
+    {
+      "text": "reads-existing-employee-file",
+      "passed": true,
+      "evidence": "Proposed-changes.md shows current before/after for Nickname and GitHub lines, demonstrating the existing file was read"
+    },
+    {
+      "text": "detects-discord-id-redundant",
+      "passed": true,
+      "evidence": "Change 3 states: 'Discord ID is already present in the file. No modification required.'"
+    },
+    {
+      "text": "adds-ray-nickname",
+      "passed": true,
+      "evidence": "Change 1: 'hao / hào' → 'hao / hào / Ray'"
+    },
+    {
+      "text": "updates-github-username",
+      "passed": true,
+      "evidence": "Change 2: '<email> (same email)' → 'haoxray'. Notes the user explicitly stated GitHub username."
+    },
+    {
+      "text": "merges-into-existing-entry",
+      "passed": true,
+      "evidence": "All changes target the single existing Hào entry. No duplicate entry. Summary confirms 'No new domain was created'."
+    }
+  ]
+}

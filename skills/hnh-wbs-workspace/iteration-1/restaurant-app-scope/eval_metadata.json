@@ -1,0 +1,13 @@
+{
+  "eval_id": 1,
+  "eval_name": "restaurant-app-scope",
+  "prompt": "We need to build a mobile ordering app for a Vietnamese restaurant chain (5 locations). Customers order food, pay online, earn loyalty points. Staff sees orders in real-time on tablets. We want both iOS and Android. Break this down for me.",
+  "assertions": [
+    {"name": "produces-pdf", "description": "A PDF file exists in the outputs directory"},
+    {"name": "covers-all-sdlc-stages", "description": "WBS covers all 6 SDLC stages: Discovery, Design, Development, QA, Deployment, Maintenance"},
+    {"name": "module-level-granularity", "description": "Items are at module level (e.g. Authentication Module, Payment Module) not task level (e.g. create login button)"},
+    {"name": "evaluates-multiple-approaches", "description": "At least 2 distinct technical approaches are analyzed with tradeoffs"},
+    {"name": "technical-feasibility-present", "description": "Feasibility assessment exists for major requirements"},
+    {"name": "brand-compliant-no-red", "description": "PDF uses ZenLabs brand colors and does not use red for risk/error indicators"}
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "skill_name": "hnh-wbs",
+  "iteration": 1,
+  "configurations": [
+    {
+      "name": "with_skill",
+      "results": [
+        {
+          "eval_name": "restaurant-app-scope",
+          "pass_rate": 1.0,
+          "passed": 6,
+          "total": 6,
+          "duration_seconds": 490.8,
+          "total_tokens": 83794
+        },
+        {
+          "eval_name": "hr-platform-estimates",
+          "pass_rate": 1.0,
+          "passed": 8,
+          "total": 8,
+          "duration_seconds": 605.4,
+          "total_tokens": 98141
+        },
+        {
+          "eval_name": "vague-ai-dashboard",
+          "pass_rate": 1.0,
+          "passed": 7,
+          "total": 7,
+          "duration_seconds": 534.9,
+          "total_tokens": 81255
+        }
+      ],
+      "aggregate": {
+        "mean_pass_rate": 1.0,
+        "stddev_pass_rate": 0.0,
+        "mean_duration_seconds": 543.7,
+        "stddev_duration_seconds": 47.4,
+        "mean_tokens": 87730,
+        "stddev_tokens": 7340,
+        "total_passed": 21,
+        "total_assertions": 21
+      }
+    },
+    {
+      "name": "without_skill",
+      "results": [
+        {
+          "eval_name": "restaurant-app-scope",
+          "pass_rate": 0.5,
+          "passed": 3,
+          "total": 6,
+          "duration_seconds": 180.8,
+          "total_tokens": 35668
+        },
+        {
+          "eval_name": "hr-platform-estimates",
+          "pass_rate": 0.5,
+          "passed": 4,
+          "total": 8,
+          "duration_seconds": 263.0,
+          "total_tokens": 41773
+        },
+        {
+          "eval_name": "vague-ai-dashboard",
+          "pass_rate": 0.4286,
+          "passed": 3,
+          "total": 7,
+          "duration_seconds": 186.7,
+          "total_tokens": 45658
+        }
+      ],
+      "aggregate": {
+        "mean_pass_rate": 0.476,
+        "stddev_pass_rate": 0.034,
+        "mean_duration_seconds": 210.2,
+        "stddev_duration_seconds": 37.0,
+        "mean_tokens": 41033,
+        "stddev_tokens": 4100,
+        "total_passed": 10,
+        "total_assertions": 21
+      }
+    }
+  ],
+  "delta": {
+    "pass_rate": "+52.4%",
+    "duration": "+333.5s (2.6x slower — expected due to design guideline reading + PDF QA loop)",
+    "tokens": "+46697 (2.1x more — expected due to multi-phase workflow)"
+  },
+  "analyst_observations": [
+    "with_skill achieves 100% pass rate across all 21 assertions vs 48% baseline — the skill adds significant value",
+    "The 3 assertions that always pass regardless of skill (produces-pdf, module-level-granularity partially, challenges-vague-brief partially) are weak discriminators — the strong differentiators are evaluates-multiple-approaches, brand-compliant-no-red, and technical-feasibility-present",
+    "without_skill consistently produces task-level WBS (122-135 tasks) while with_skill stays at module-level (19-32 modules) — the granularity instruction is highly effective",
+    "The time/token cost increase (2.6x / 2.1x) is entirely justified by the PDF QA loop and design guideline compliance — these are features, not waste",
+    "HR platform estimate mode shows the biggest quality gap — without_skill estimated 531 person-days while with_skill estimated 259, reflecting the AI-augmented team assumption that the skill encodes"
+  ]
+}

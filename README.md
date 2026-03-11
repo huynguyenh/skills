@@ -74,6 +74,8 @@ export GITHUB_WORK_USERNAME="your-github-username"
 | **hnh-gg-docs** | Say "Google Doc", share a docs.google.com URL, or mention creating/reading docs in Google Drive | Interact with Google Docs — read content, create documents, append text, find-and-replace, and get document metadata via the Google Docs API. |
 | **hnh-maintain-skills** | Say "maintain skills", "skill audit", or "review skills" | Scans all custom skills for improvement opportunities — detects raw API calls replaceable by wrapper skills, stale file references, credential anti-patterns, missing cross-references, and duplicated logic. |
 | **hnh-wbs** | Say "WBS", "scope this project", "break this down", or share a project brief | CTO-level Work Breakdown Structure generator — evaluates multiple technical approaches across the full SDLC, recommends the best option, and produces a branded PDF. Supports scope mode (no estimates) and estimate mode (AI-augmented man-day estimates). |
+| **hnh-get-report** | Say "report", "status update", "how's [project] going?" | CEO-level project status report — scans backlog spreadsheets, GitHub repos, Google Drive, and Notion in parallel. Computes pipeline metrics, tracks UC movement, and highlights changes since the last report. |
+| **hnh-record-screen** | Say "record", "screen capture", "demo video", or "screencast" | Record screen demos and optimize video output — capture walkthroughs, produce screencasts, compress large video files (MOV, MP4). |
 
 ## Repo structure
 
@@ -98,6 +100,8 @@ skills/                # Custom skills
   hnh-review-pr/       #   PR review with parallel agents
   hnh-setup/           #   Workspace bootstrapping
   hnh-wbs/             #   CTO-level WBS generator with branded PDF
+  hnh-get-report/      #   CEO-level project status report generator
+  hnh-record-screen/   #   Screen recording & video optimization
 memory/                # Persistent memory (preferences, indexes)
 rules/                 # Global rules (git, credentials, workspace)
 ```

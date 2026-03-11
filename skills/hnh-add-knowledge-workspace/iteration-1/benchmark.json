@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "skill_name": "hnh-add-knowledge",
+    "skill_path": "/Users/hnh/.claude/skills/hnh-add-knowledge",
+    "executor_model": "claude-sonnet-4-20250514",
+    "analyzer_model": "claude-sonnet-4-20250514",
+    "timestamp": "2026-03-10T16:15:00Z",
+    "evals_run": ["conflict-detection", "drive-rescan", "merge-existing"],
+    "runs_per_configuration": 3
+  },
+  "runs": [
+    {
+      "eval_name": "conflict-detection",
+      "eval_id": 1,
+      "prompt": "hey btw our zenlabs notion workspace is actually called 'ZenLabs' not 'Zen Labs', and the integration is named 'Claude Bot' now — we renamed it last week",
+      "configurations": {
+        "with_skill": {
+          "pass_rate": 1.0, "passed": 5, "total": 5, "time_seconds": 42.9, "tokens": 30248,
+          "assertions": [
+            {"text": "reads-existing-kb", "passed": true},
+            {"text": "detects-workspace-name-conflict", "passed": true},
+            {"text": "detects-integration-name-conflict", "passed": true},
+            {"text": "proposes-update-not-append", "passed": true},
+            {"text": "no-duplicate-entries", "passed": true}
+          ]
+        },
+        "old_skill": {
+          "pass_rate": 1.0, "passed": 5, "total": 5, "time_seconds": 36.2, "tokens": 30004,
+          "assertions": [
+            {"text": "reads-existing-kb", "passed": true},
+            {"text": "detects-workspace-name-conflict", "passed": true},
+            {"text": "detects-integration-name-conflict", "passed": true},
+            {"text": "proposes-update-not-append", "passed": true},
+            {"text": "no-duplicate-entries", "passed": true}
+          ]
+        }
+      }
+    },
+    {
+      "eval_name": "drive-rescan",
+      "eval_id": 2,
+      "prompt": "can you rescan our google drive and update the knowledge base? i think we added some new folders recently",
+      "configurations": {
+        "with_skill": {
+          "pass_rate": 1.0, "passed": 5, "total": 5, "time_seconds": 220.7, "tokens": 59193,
+          "assertions": [
+            {"text": "calls-drive-api", "passed": true},
+            {"text": "compares-against-kb", "passed": true},
+            {"text": "produces-diff-report", "passed": true},
+            {"text": "waits-for-approval", "passed": true},
+            {"text": "handles-structural-changes", "passed": true}
+          ]
+        },
+        "old_skill": {
+          "pass_rate": 0.8, "passed": 4, "total": 5, "time_seconds": 177.4, "tokens": 50627,
+          "assertions": [
+            {"text": "calls-drive-api", "passed": true},
+            {"text": "compares-against-kb", "passed": true},
+            {"text": "produces-diff-report", "passed": false},
+            {"text": "waits-for-approval", "passed": true},
+            {"text": "handles-structural-changes", "passed": true}
+          ]
+        }
+      }
+    },
+    {
+      "eval_name": "merge-existing",
+      "eval_id": 3,
+      "prompt": "note that Hào's discord ID is 1412635437901676625 and he also goes by 'Ray' sometimes. oh and his github username is haoxray",
+      "configurations": {
+        "with_skill": {
+          "pass_rate": 1.0, "passed": 5, "total": 5, "time_seconds": 43.7, "tokens": 30230,
+          "assertions": [
+            {"text": "reads-existing-employee-file", "passed": true},
+            {"text": "detects-discord-id-redundant", "passed": true},
+            {"text": "adds-ray-nickname", "passed": true},
+            {"text": "updates-github-username", "passed": true},
+            {"text": "merges-into-existing-entry", "passed": true}
+          ]
+        },
+        "old_skill": {
+          "pass_rate": 1.0, "passed": 5, "total": 5, "time_seconds": 35.6, "tokens": 29996,
+          "assertions": [
+            {"text": "reads-existing-employee-file", "passed": true},
+            {"text": "detects-discord-id-redundant", "passed": true},
+            {"text": "adds-ray-nickname", "passed": true},
+            {"text": "updates-github-username", "passed": true},
+            {"text": "merges-into-existing-entry", "passed": true}
+          ]
+        }
+      }
+    }
+  ],
+  "run_summary": {
+    "with_skill": { "pass_rate": "100%", "passed": 15, "total": 15, "avg_time_seconds": 102.4, "avg_tokens": 39890 },
+    "old_skill": { "pass_rate": "93.3%", "passed": 14, "total": 15, "avg_time_seconds": 83.1, "avg_tokens": 36876 },
+    "delta": { "pass_rate": "+6.7%", "time_seconds": "+19.3s (avg)", "tokens": "+3014 (avg)" }
+  },
+  "notes": [
+    "New skill achieves 100% pass rate vs 93.3% for old skill (+6.7%)",
+    "The single assertion difference: old_skill failed 'produces-diff-report' on drive-rescan — produced a change proposal but not a structured reconciliation report with KB-vs-source status columns",
+    "New skill costs ~19s more on average and ~3K more tokens — the overhead comes from the reconciliation framework (classification tables, diff format)",
+    "Drive rescan is the most expensive eval for both versions (~3-4min, ~50-60K tokens) due to multiple Drive API calls",
+    "conflict-detection and merge-existing are lightweight (~35-43s, ~30K tokens) since they only read local KB files",
+    "Key qualitative advantage of new skill: explicit reconciliation classifications (New/Update/Merge/Redundant/Conflict) make the reasoning transparent and reviewable"
+  ]
+}
