@@ -18,7 +18,7 @@ Extract: `owner`, `repo`, `pr_number`. You'll need these throughout.
 
 ## Execution Flow
 
-The review has three phases. Phase 2 launches parallel agents to save time.
+The review has four phases. Phase 2 launches review agents in parallel. Phase 3 verifies review findings before the final report.
 
 ### Phase 1: Fetch PR Metadata
 
@@ -55,9 +55,35 @@ Launch all 5 agents in parallel (all in a single tool-call turn). Each agent's d
 3. For agents C and E, also pass the full diff (save to a temp file and reference it)
 4. All 5 agents launch in the same tool-call turn for maximum parallelism
 
-### Phase 3: Alignment Check & Report
+### Phase 3: Verification
 
-Once all agents complete, synthesize the results.
+Review agents sometimes produce findings that sound convincing but are factually wrong — referencing outdated API behavior, misreading logic, or suggesting patterns that contradict the codebase. This phase catches those errors before they reach the final report.
+
+Once Agents C and E complete, collect their findings and launch 3 verification agents in parallel (single tool-call turn):
+
+| Agent | File | What it verifies |
+|-------|------|-----------------|
+| V1: Fact Checker | `agents/verify-facts.md` | Version numbers, API behavior, library features, deprecation claims, default values |
+| V2: Logic Verifier | `agents/verify-logic.md` | Re-reads actual source code to confirm bugs/issues actually exist |
+| V3: Pattern Verifier | `agents/verify-codebase.md` | Checks suggestions match the project's actual conventions and patterns |
+
+**How to launch each verification agent:**
+1. Read the agent's `.md` file from this skill's `agents/` directory
+2. Pass the collected findings from Agents C and E as input
+3. Also pass: owner, repo, pr_number, and the list of changed files so they can read source
+4. All 3 agents launch in the same tool-call turn
+
+**Processing verification results:**
+- **INCORRECT / INCONSISTENT findings** → Remove from the final report entirely, or revise with the corrected information
+- **PARTIALLY_CORRECT findings** → Revise the finding to reflect what's actually true, drop the incorrect parts
+- **UNVERIFIED factual claims** → Add a caveat note like "(verify: could not confirm version behavior)" so the user knows to double-check
+- **VERIFIED / CONFIRMED / CONSISTENT findings** → Keep as-is
+
+This step is not optional — every review must go through verification. The goal is zero false positives in the final report. A shorter, accurate report is far more valuable than a longer one with wrong claims.
+
+### Phase 4: Alignment Check & Report
+
+Once all agents (including verification) complete, synthesize the results.
 
 **Alignment check**: Compare what the PR title/description says the change does vs. what the diff actually does. Flag mismatches — missing changes, undocumented side effects, scope creep, or misleading descriptions.
 

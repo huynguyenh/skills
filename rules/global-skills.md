@@ -13,6 +13,8 @@ When interacting with external services that have a dedicated wrapper skill, ALW
 | Dify | `hnh-dify` → `~/.claude/skills/hnh-dify/scripts/dify.py` | Running workflows, managing knowledge bases, Dify apps |
 | Discord | `hnh-discord` → `~/.claude/skills/hnh-discord/scripts/discord.py` | Reading/sending Discord messages, managing threads |
 | Sentry | `hnh-report-sentry` | Investigating Sentry issues or errors |
+| AWS | `hnh-aws` → `aws` CLI | S3, ECR, RDS, CloudWatch, IAM operations |
+| Kubernetes/EKS | `hnh-k8s` → `kubectl` | Pod debugging, logs, events, resource monitoring |
 | GitHub | `gh` CLI (not curl) | PRs, issues, releases, API calls |
 
 ## What NOT to do

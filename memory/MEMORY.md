@@ -20,7 +20,7 @@
 - Multiple plans can exist per ticket (different dates/approaches)
 
 ## Custom Skills
-- `/hnh-review-pr` — Deep PR review (context gathering, build verification, principal-engineer-level review with categorized report)
+- `/hnh-review-pr` — Deep PR review (context gathering, build verification, principal-engineer-level review with verification agents)
 - `/hnh-report-sentry` — Investigate a Sentry issue (fetch data, explore codebase, prioritized report P0-P4, optional Jira ticket)
 - `/hnh-backup` — Back up skills, plans, rules, memory to GitHub with credential sanitization
 - `/hnh-setup` — Bootstrap or sync Claude workspace on any machine
@@ -38,5 +38,7 @@
 - `/hnh-dify` — Interact with Dify.ai (run workflows, chat with apps, manage knowledge bases, view logs)
 - `/hnh-gg-docs` — Interact with Google Docs (read, create, append text, find-and-replace, metadata)
 - `/hnh-wbs` — CTO-level Work Breakdown Structure generator (SDLC coverage, multi-approach evaluation, branded PDF)
-- `/hnh-get-report` — CEO-level project status report (scans backlog, GitHub, Drive, Notion in parallel; tracks UC pipeline deltas)
-- `/hnh-record-screen` — Screen recording & video optimization (capture demos, compress MOV/MP4)
+- `/hnh-get-report` — CEO-level project status report (scans backlog, GitHub, Drive, Notion in parallel)
+- `/hnh-record-screen` — Screen recording & video optimization (walkthroughs, screencasts, compression)
+- `/hnh-aws` — AWS infrastructure (S3, ECR, RDS, CloudWatch, IAM via AWS CLI)
+- `/hnh-k8s` — Kubernetes/EKS debugging & monitoring (pods, logs, events, resource usage via kubectl)

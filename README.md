@@ -56,7 +56,7 @@ export GITHUB_WORK_USERNAME="your-github-username"
 
 | Skill | Trigger | What it does |
 |-------|---------|-------------|
-| **hnh-review-pr** | Share a GitHub PR URL or say "review this PR" | Deep PR review: fetches PR metadata + linked Jira/esa tickets, verifies the build locally, runs 5 parallel review agents (document context, build, architecture, clean code, discussion history), and delivers a categorized report (Critical / Warning / Suggestion / Clean Code / Nice to Have) with clickable GitHub links. |
+| **hnh-review-pr** | Share a GitHub PR URL or say "review this PR" | Deep PR review: fetches PR metadata + linked Jira/esa tickets, verifies the build locally, runs 5 parallel review agents (document context, build, architecture, clean code, discussion history), then 3 verification agents (fact checker, logic verifier, pattern verifier) to eliminate false positives, and delivers a categorized report with clickable GitHub links. |
 | **hnh-report-sentry** | Share a Sentry issue URL or say "investigate this Sentry error" | Fetches full Sentry context (stacktraces, events, tags, frequency), explores the local codebase to trace the root cause, and delivers a prioritized report (P0-P4) with suggested fixes. Offers to create a Jira ticket with AI-generated content disclaimer. |
 | **hnh-backup** | Say "backup" or "sync to GitHub" | Backs up skills, plans, rules, and memory to this repo. Sanitizes credentials, device paths, and work usernames before pushing. |
 | **hnh-setup** | Say "setup" on a new machine | Bootstraps the full Claude workspace — clones this repo, creates directory structure, installs skills and rules. Handles both first-time setup and incremental syncs. |
@@ -76,6 +76,8 @@ export GITHUB_WORK_USERNAME="your-github-username"
 | **hnh-wbs** | Say "WBS", "scope this project", "break this down", or share a project brief | CTO-level Work Breakdown Structure generator — evaluates multiple technical approaches across the full SDLC, recommends the best option, and produces a branded PDF. Supports scope mode (no estimates) and estimate mode (AI-augmented man-day estimates). |
 | **hnh-get-report** | Say "report", "status update", "how's [project] going?" | CEO-level project status report — scans backlog spreadsheets, GitHub repos, Google Drive, and Notion in parallel. Computes pipeline metrics, tracks UC movement, and highlights changes since the last report. |
 | **hnh-record-screen** | Say "record", "screen capture", "demo video", or "screencast" | Record screen demos and optimize video output — capture walkthroughs, produce screencasts, compress large video files (MOV, MP4). |
+| **hnh-aws** | Say "check S3", "show ECR images", "RDS status", "CloudWatch logs", or any AWS operation | Interact with AWS infrastructure — S3 buckets, ECR container registries, RDS databases, CloudWatch logs/metrics, and IAM users/roles via the AWS CLI. |
+| **hnh-k8s** | Say "check pods", "show me logs", "why is it crashing", or any Kubernetes/EKS operation | Debug and monitor Kubernetes (EKS) clusters — check pod status, read logs, inspect events, troubleshoot crashes, and view resource usage via kubectl. |
 
 ## Repo structure
 
@@ -102,7 +104,10 @@ skills/                # Custom skills
   hnh-wbs/             #   CTO-level WBS generator with branded PDF
   hnh-get-report/      #   CEO-level project status report generator
   hnh-record-screen/   #   Screen recording & video optimization
+  hnh-aws/             #   AWS infrastructure (S3, ECR, RDS, CloudWatch, IAM)
+  hnh-k8s/             #   Kubernetes/EKS debugging & monitoring
 memory/                # Persistent memory (preferences, indexes)
+config/                # Portable config files (statusline)
 rules/                 # Global rules (git, credentials, workspace)
 ```
 
