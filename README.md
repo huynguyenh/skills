@@ -78,6 +78,7 @@ export GITHUB_WORK_USERNAME="your-github-username"
 | **hnh-record-screen** | Say "record", "screen capture", "demo video", or "screencast" | Record screen demos and optimize video output — capture walkthroughs, produce screencasts, compress large video files (MOV, MP4). |
 | **hnh-aws** | Say "check S3", "show ECR images", "RDS status", "CloudWatch logs", or any AWS operation | Interact with AWS infrastructure — S3 buckets, ECR container registries, RDS databases, CloudWatch logs/metrics, and IAM users/roles via the AWS CLI. |
 | **hnh-k8s** | Say "check pods", "show me logs", "why is it crashing", or any Kubernetes/EKS operation | Debug and monitor Kubernetes (EKS) clusters — check pod status, read logs, inspect events, troubleshoot crashes, and view resource usage via kubectl. |
+| **hnh-document-demo** | Say "wrap this up", "document this demo", "demo-1", or mention build-with-ai repo | Package a build session into a shareable "Build with AI" markdown doc with screenshots, push to zenlbs/build-with-ai GitHub repo. Focuses on technical process (skills, prompting, feedback loop), not just features. |
 
 ## Repo structure
 
@@ -106,6 +107,7 @@ skills/                # Custom skills
   hnh-record-screen/   #   Screen recording & video optimization
   hnh-aws/             #   AWS infrastructure (S3, ECR, RDS, CloudWatch, IAM)
   hnh-k8s/             #   Kubernetes/EKS debugging & monitoring
+  hnh-document-demo/   #   Build session → shareable demo document
 memory/                # Persistent memory (preferences, indexes)
 config/                # Portable config files (statusline)
 rules/                 # Global rules (git, credentials, workspace)

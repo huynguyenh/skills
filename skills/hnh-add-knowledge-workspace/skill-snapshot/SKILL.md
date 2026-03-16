@@ -18,6 +18,7 @@ Capture short pieces of knowledge the user shares, classify them by scope and do
 │   └── ...
 ├── work/             ← work-specific knowledge
 │   ├── kubernetes.md
+│   ├── andpad-api.md
 │   └── ...
 └── personal/         ← personal life + own businesses
     ├── zenlabs.md
@@ -31,7 +32,7 @@ Determine which scope the knowledge belongs to:
 | Scope | When to use | Examples |
 |-------|-------------|---------|
 | **Global** | Universally useful — applies to the user as a person across work and personal life | Programming fundamentals, productivity tips, health facts, general tech knowledge |
-| **Work** | Specific to the user's current employment | Internal API quirks, team conventions, infrastructure details, work tooling |
+| **Work** | Specific to the user's employment (currently at 88labs/Andpad) | Internal API quirks, team conventions, infrastructure details, work tooling |
 | **Personal** | Personal life, side projects, own businesses | ZenLabs (user's company), personal finance, family, hobbies |
 
 **Key context:** The user owns a company called ZenLabs. Anything ZenLabs-related is **Personal** scope, not Work.
@@ -110,6 +111,8 @@ Auto-generate and maintain this file whenever domains change:
 ## Work
 | Domain | File | Summary |
 |--------|------|---------|
+| andpad-api | `work/andpad-api.md` | Internal API quirks and endpoints |
+
 ## Personal
 | Domain | File | Summary |
 |--------|------|---------|

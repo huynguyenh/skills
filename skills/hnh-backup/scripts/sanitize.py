@@ -39,13 +39,15 @@ MEMORY_STRIP_SECTIONS = [
     "API Credentials",
     "Sentry",
     "Google Drive",
+    "88labs Repository Architecture",
     "Service Mapping",
+    "Andpad Vanguard Backend",
     "Rules & Conventions",
 ]
 
 # Company/org-specific identifiers to redact across all files
 ORG_REDACT_PATTERNS = [
-    (re.compile(r'[a-z0-9-]+\.sentry\.io'), '<sentry-url>'),
+    (re.compile(r'andpad-dev\.sentry\.io'), '<sentry-url>'),
     (re.compile(r'SENTRY_ORG=<redacted>'), 'SENTRY_ORG=<redacted>'),
     (re.compile(r'i-destiny-\d+'), '<gcp-project>'),
     (re.compile(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'), '<email>'),
