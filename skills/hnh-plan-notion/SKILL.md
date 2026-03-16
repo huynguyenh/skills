@@ -13,7 +13,11 @@ Accept:
 - Full URL: `https://www.notion.so/{workspace}/{page-title}-{page_id}` or `https://notion.so/...`
 - The page ID is the last 32-character hex string in the URL (with or without dashes)
 
-## Phase 0: Fetch Notion Page
+## Phase 0a: Read Project CLAUDE.md
+
+Before starting, check if the repository (cwd or the target repo) has a `CLAUDE.md` at its root. If it exists, read it — it contains project-specific conventions, architecture context, and patterns that should inform the plan. Pass relevant context to investigation agents.
+
+## Phase 0b: Fetch Notion Page
 
 Use the `hnh-notion` skill's CLI tool to fetch the page. Read `~/.zshrc` for `NOTION_API_TOKEN`, then:
 

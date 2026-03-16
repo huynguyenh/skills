@@ -77,14 +77,23 @@ If custom fonts are registered via `reportlab.pdfbase`, use the real fonts. Othe
 | **Emerald 300** | `#98D5AB` | Medium green, secondary backgrounds |
 | **Firefly 200** | `#C0E0EF` | Light blue, borders, dividers, info backgrounds |
 
-### Status / Semantic Colors
-| Status | Background | Text |
-|---|---|---|
-| Low risk / Success | `#C8E6B7` (Emerald 100) | `#04563E` (Emerald 900) |
-| Medium / Warning | `#F6F6E8` (Ecru 100) | `#636230` (Ecru 700) |
-| High risk / Error | `#D8EDF5` (Firefly 100) with `#09242E` text, or use Ecru 300 `#E3E2BC` | `#09242E` |
+### 3-Level Severity / Difficulty Colors
+Use these three colors whenever you need a 3-tier scale (high/medium/low, hard/medium/easy, critical/warning/ok, etc.):
 
-> **Important:** ZenLabs does NOT use red as a brand color. For "high risk" or "error" states, use the dark Firefly palette or warm Ecru tones instead. Avoid `#FF0000`, `#c62828`, or any bright red.
+| Level | Hex | Usage |
+|---|---|---|
+| **Low / Easy / OK** | `#179F65` (green) | Low risk, easy items, success, good status |
+| **Medium / Moderate** | `#EB7E11` (orange) | Medium risk, moderate difficulty, warning |
+| **High / Hard / Critical** | `#F03333` (red) | High risk, hard items, critical, error |
+
+These override the brand palette specifically for severity/difficulty indicators. Use them as background fills with white text, or as text color on light backgrounds, or as badge/pill colors — whichever fits the context.
+
+```python
+# ReportLab severity colors
+SEVERITY_LOW    = HexColor("#179F65")  # Green — low/easy/ok
+SEVERITY_MEDIUM = HexColor("#EB7E11")  # Orange — medium/moderate
+SEVERITY_HIGH   = HexColor("#F03333")  # Red — high/hard/critical
+```
 
 ### Full Emerald Scale (Green)
 | Step | Hex |
@@ -134,6 +143,119 @@ If custom fonts are registered via `reportlab.pdfbase`, use the real fonts. Othe
 | 700 | `#636230` |
 | 800 | `#464622` |
 
+## Cover Page (PDF)
+
+Every PDF document starts with a branded cover page. The cover page must use the actual project/document content — never placeholder text.
+
+### Cover Page Layout
+
+The cover page has these elements, top to bottom:
+
+1. **Logo** (top of page, no header bar): Use `logo-dark-on-light.png` (dark logo on white/gradient background). Position at 20mm from top edge, 20mm from left, width ~44mm. There is NO dark green header bar.
+2. **Green gradient background**: Smooth radial fade concentrated on the RIGHT side of the page. Use 150+ overlapping translucent circles with power-curve alpha (t^2.2) anchored outside the right edge, plus a secondary accent layer near the top-right corner. The LEFT ~40% of the page must stay white so text and logo remain crisp. Do NOT use concentric arc patterns — the gradient must be smooth.
+3. **Title** (large, left-aligned, in the white area): Helvetica-Bold 48pt, Primary Black (`#09242E`). Baseline of first line at ~62% from bottom of page. Split long titles across two lines (e.g., "ENAT AI" on line 1, "Content Factory" on line 2, with 18mm gap between baselines).
+4. **Subtitle** (below second title line, ~14mm gap): Helvetica-Bold 16pt, Emerald 900 (`#04563E`). The document type (e.g., "Work Breakdown Structure", "Technical Proposal").
+5. **Metadata block** (lower-left, starting at ~23% from bottom): Helvetica-Bold 12pt for labels, Helvetica 12pt for values, Primary Black. Each line has a bold label followed by the value, 7mm line spacing:
+   - **Client:** [actual client name]
+   - **Prepared by:** ZenLabs
+   - **Date:** [actual date, formatted as "Month DD, YYYY"]
+   - **Version:** [version number]
+   - Any other relevant metadata fields
+6. **Footer** (bottom of page): Light gray divider line (`#DDDDDD`, 0.5pt) at 18mm from bottom. Below it: document title + " - [type] | ZenLabs" on the left, "Page 1" on the right, Helvetica 7pt, Emerald 700 (`#179F65`).
+
+### Key Rule: Use Real Content
+
+The cover page fields must be populated from the actual document context — the project name, client name, date, etc. Never leave generic placeholders like "Project Title" or "Client Name". If the user hasn't specified a value, ask for it rather than guessing.
+
+### ReportLab Cover Page Pattern
+```python
+from reportlab.lib.colors import HexColor, Color
+
+LOGO_DARK_PATH = os.path.expanduser("~/.claude/skills/hnh-design-guideline/assets/logos/logo-dark-on-light.png")
+
+def draw_cover_page(c, doc):
+    """Draw as onFirstPage callback. Title/subtitle/metadata are hardcoded per document."""
+    w, h = A4  # 595.27 x 841.89 points
+
+    # White background
+    c.setFillColor(HexColor("#FFFFFF"))
+    c.rect(0, 0, w, h, fill=1, stroke=0)
+
+    # Green gradient — smooth radial fade from RIGHT side
+    # Concentrated on right edge, fading to white on the left ~40%
+    import math
+    cx, cy = w + 80*mm, h * 0.55  # center outside right edge
+    max_r = 320*mm
+    steps = 150
+    for i in range(steps):
+        t = i / float(steps)
+        radius = max_r * (1 - t)
+        if radius < 3*mm: break
+        intensity = t ** 2.2
+        alpha = intensity * 0.22
+        if alpha < 0.001: continue
+        c.setFillColor(Color(0.467, 0.843, 0.616, alpha))
+        c.circle(cx, cy, radius, fill=1, stroke=0)
+
+    # Upper-right accent — slightly more vivid near top-right corner
+    cx2, cy2 = w + 30*mm, h + 20*mm
+    for i in range(100):
+        t = i / 100.0
+        radius = 220*mm * (1 - t)
+        if radius < 3*mm: break
+        intensity = t ** 2.5
+        alpha = intensity * 0.14
+        if alpha < 0.001: continue
+        c.setFillColor(Color(0.263, 0.808, 0.506, alpha))
+        c.circle(cx2, cy2, radius, fill=1, stroke=0)
+
+    # Logo — dark logo on white/gradient background, with white backing
+    from reportlab.lib.utils import ImageReader
+    logo_reader = ImageReader(LOGO_DARK_PATH)
+    iw, ih = logo_reader.getSize()
+    logo_w = 44*mm
+    logo_h = logo_w * ih / iw
+    logo_x = 20*mm
+    logo_y = h - 18*mm - logo_h  # 18mm from top edge
+    # White backing to prevent gradient bleed-through
+    padding = 2*mm
+    c.setFillColor(HexColor("#FFFFFF"))
+    c.rect(logo_x - padding, logo_y - padding, logo_w + 2*padding, logo_h + 2*padding, fill=1, stroke=0)
+    c.drawImage(logo_reader, logo_x, logo_y, width=logo_w, height=logo_h, mask='auto')
+
+    # Title — two lines, baseline at ~62% from bottom, 18mm gap
+    c.setFillColor(HexColor("#09242E"))
+    c.setFont("Helvetica-Bold", 48)
+    line1_y = h * 0.62
+    c.drawString(22*mm, line1_y, "ENAT AI")                 # Line 1
+    c.drawString(22*mm, line1_y - 18*mm, "Content Factory")  # Line 2
+
+    # Subtitle — below line 2, 14mm gap
+    c.setFillColor(HexColor("#04563E"))
+    c.setFont("Helvetica-Bold", 16)
+    c.drawString(22*mm, line1_y - 18*mm - 14*mm, "Work Breakdown Structure")
+
+    # Metadata — starting at 23% from bottom
+    y = h * 0.23
+    for label, value in metadata.items():
+        c.setFont("Helvetica-Bold", 12)
+        c.setFillColor(HexColor("#09242E"))
+        c.drawString(22*mm, y, f"{label}:")
+        lw = c.stringWidth(f"{label}:", "Helvetica-Bold", 12)
+        c.setFont("Helvetica", 12)
+        c.drawString(22*mm + lw + 2*mm, y, value)
+        y -= 7*mm
+
+    # Footer with divider
+    c.setStrokeColor(HexColor("#DDDDDD"))
+    c.setLineWidth(0.5)
+    c.line(20*mm, 18*mm, w - 20*mm, 18*mm)
+    c.setFont("Helvetica", 7)
+    c.setFillColor(HexColor("#179F65"))
+    c.drawString(22*mm, 12*mm, "ENAT AI Content Factory - WBS | ZenLabs")
+    c.drawRightString(w - 22*mm, 12*mm, "Page 1")
+```
+
 ## Layout Patterns
 
 ### PDF Documents (ReportLab)
@@ -160,12 +282,20 @@ WHITE          = HexColor("#FFFFFF")
 ("BACKGROUND", (0, 0), (-1, 0), EMERALD_900),
 ("TEXTCOLOR", (0, 0), (-1, 0), WHITE),
 
-# Row borders
-("GRID", (0, 0), (-1, -1), 0.5, FIREFLY_200),
+# Row borders — use neutral gray, NOT Firefly 200 (blue clashes with warm Ecru rows)
+("GRID", (0, 0), (-1, -1), 0.5, HexColor("#E0E0E0")),
 
 # Alternating row colors (optional)
 # Even rows: white, Odd rows: Ecru 100
 ```
+
+### Risk Badge Style (Modern Pill)
+For risk/severity columns in tables, use rounded pill badges — NOT full-cell background fills. Use the severity colors as pill background with white text:
+- **Low**: `#179F65` (green pill)
+- **Medium**: `#EB7E11` (orange pill)
+- **High**: `#F03333` (red pill)
+
+Pills must be **adaptive width** (`cell_width - 2mm`, giving 1mm margin each side), fully rounded ends (`pill_r = pill_h / 2`), centered in the cell, with Helvetica-Bold 6.5pt white text. This ensures pills fit any column width.
 
 ### Document Structure
 - **Page size:** A4 (210 x 297 mm)
@@ -209,3 +339,13 @@ logo = Image(LOGO_PATH, width=50*mm, height=12*mm)
 - Tech-forward, clean, minimal
 - Avoid jargon when possible
 - Use active voice
+
+## CRITICAL Cover Page Rules
+
+These rules override any older pattern or memory. Always apply them when generating PDF cover pages:
+
+- Logo MUST be `logo-dark-on-light.png` (dark logo on white background) — NOT `logo-light-on-dark.png`
+- Use variable name `LOGO_DARK_PATH` pointing to `logo-dark-on-light.png`
+- NO header bar — do NOT draw a dark green rect across the top of the cover page
+- Logo is placed directly on the white/gradient background at 20mm from the top edge, 20mm from left
+- The cover page background is white with a right-side radial green gradient — no solid colored bar anywhere

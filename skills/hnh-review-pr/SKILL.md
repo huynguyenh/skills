@@ -20,6 +20,10 @@ Extract: `owner`, `repo`, `pr_number`. You'll need these throughout.
 
 The review has four phases. Phase 2 launches review agents in parallel. Phase 3 verifies review findings before the final report.
 
+### Phase 0: Read Project CLAUDE.md
+
+Before starting the review, check if the repository has a `CLAUDE.md` file at its root. If it exists, read it — it contains project-specific conventions, patterns, and architecture context that directly inform what counts as a valid finding vs. a false positive. Pass relevant conventions to all review and verification agents so they don't flag established patterns as issues.
+
 ### Phase 1: Fetch PR Metadata
 
 Run these `gh` commands to gather everything:

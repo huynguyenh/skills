@@ -115,21 +115,212 @@ Read: ~/.claude/skills/hnh-design-guideline/SKILL.md
 | **Approach Analysis** | All evaluated approaches with pros/cons matrix, recommended approach highlighted |
 | **WBS by Phase** | The full breakdown organized by SDLC stage, module-level detail |
 | **Dependency Map** | Visual or tabular representation of module dependencies and critical path |
-| **Risk Register** | Top risks with likelihood, impact, and mitigation strategy |
-| **(Estimate mode) Timeline** | Man-day estimates per module, total effort, critical path timeline |
+| **Risk Register** | High and Medium risks only — with likelihood, impact, and mitigation strategy. No Low risks. |
+| **(Estimate mode) Timeline** | Man-day estimates per module (AI-augmented ~50% of traditional), total effort, critical path timeline |
 | **Assumptions & Constraints** | What was assumed, what limits the plan |
+| **Proposed Milestones** | 3-milestone breakdown: M1 (foundation, zero high-risk), M2 (core differentiators), M3 (polish + launch) |
 
 #### PDF Design Rules
 
 - Use A4 page size, 20mm margins
-- Cover page: Emerald 900 (`#04563E`) header bar with white text (Rubik Bold 28pt)
 - Section headings: Rubik Bold 14pt, Emerald 900
 - Body text: Inter Regular 9pt, Primary Black (`#09242E`)
-- Tables: Emerald 900 header row with white text, Firefly 200 (`#C0E0EF`) grid lines, Ecru 100 (`#F6F6E8`) alternating rows
-- Risk indicators: use brand semantic colors (Emerald 100 for Low, Ecru 300 for Medium, Firefly 100 for High — no red)
-- Logo: `~/.claude/skills/hnh-design-guideline/assets/logos/logo-dark-on-light.png` on cover page
-- Footer: page numbers, Inter Regular 7pt
+- Tables: Emerald 900 header row with white text, neutral gray (`#E0E0E0`) grid lines, Ecru 100 (`#F6F6E8`) alternating rows
+- Risk indicators: use RiskPill Flowable with severity colors (Low `#179F65` green, Medium `#EB7E11` orange, High `#F03333` red) — rounded pill badges, NOT full-cell fills
+- Footer on content pages: page numbers, Inter Regular 7pt
+- Cover page is page 1 (dedicated, no content). Use `Spacer(1, 1)` + `PageBreak()` at the start of the story to push content to page 2
 - Write the PDF generation script, save it as a temporary Python file, run it, then verify the output exists
+
+#### Cover Page (Hardcoded — Do NOT Deviate)
+
+The cover page MUST follow this exact pattern. Do not simplify, skip layers, or change positioning.
+
+```python
+from reportlab.lib.colors import HexColor, Color
+from reportlab.lib.units import mm
+from reportlab.lib.pagesizes import A4
+
+LOGO_DARK_PATH = os.path.expanduser("~/.claude/skills/hnh-design-guideline/assets/logos/logo-dark-on-light.png")
+
+def draw_cover_page(c, w, h, title_lines, subtitle, metadata):
+    """
+    Cover page callback for WBS PDFs.
+    - title_lines: list of strings, e.g. ["ENAT AI", "Content Factory"]
+    - subtitle: e.g. "Work Breakdown Structure"
+    - metadata: OrderedDict, e.g. {"Client": "...", "Prepared by": "ZenLabs", ...}
+    """
+    # 1. White background
+    c.setFillColor(HexColor("#FFFFFF"))
+    c.rect(0, 0, w, h, fill=1, stroke=0)
+
+    # 2. Green gradient — smooth radial fade from RIGHT side
+    import math
+    cx, cy = w + 80*mm, h * 0.55
+    max_r = 320*mm
+    steps = 150
+    for i in range(steps):
+        t = i / float(steps)
+        radius = max_r * (1 - t)
+        if radius < 3*mm: break
+        intensity = t ** 2.2
+        alpha = intensity * 0.22
+        if alpha < 0.001: continue
+        c.setFillColor(Color(0.467, 0.843, 0.616, alpha))
+        c.circle(cx, cy, radius, fill=1, stroke=0)
+
+    # Upper-right accent
+    cx2, cy2 = w + 30*mm, h + 20*mm
+    for i in range(100):
+        t = i / 100.0
+        radius = 220*mm * (1 - t)
+        if radius < 3*mm: break
+        intensity = t ** 2.5
+        alpha = intensity * 0.14
+        if alpha < 0.001: continue
+        c.setFillColor(Color(0.263, 0.808, 0.506, alpha))
+        c.circle(cx2, cy2, radius, fill=1, stroke=0)
+
+    # 3. Logo — with white backing to prevent gradient bleed-through
+    from reportlab.lib.utils import ImageReader
+    logo_reader = ImageReader(LOGO_DARK_PATH)
+    iw, ih = logo_reader.getSize()
+    logo_w = 44*mm
+    logo_h = logo_w * ih / iw
+    logo_x = 20*mm
+    logo_y = h - 18*mm - logo_h
+    padding = 2*mm
+    c.setFillColor(HexColor("#FFFFFF"))
+    c.rect(logo_x - padding, logo_y - padding, logo_w + 2*padding, logo_h + 2*padding, fill=1, stroke=0)
+    c.drawImage(logo_reader, logo_x, logo_y, width=logo_w, height=logo_h, mask='auto')
+
+    # 5. Title — Helvetica-Bold 48pt, baseline at ~62% from bottom, 18mm gap
+    c.setFillColor(HexColor("#09242E"))
+    c.setFont("Helvetica-Bold", 48)
+    line1_y = h * 0.62
+    c.drawString(22*mm, line1_y, title_lines[0])
+    if len(title_lines) > 1:
+        c.drawString(22*mm, line1_y - 18*mm, title_lines[1])
+        subtitle_y = line1_y - 18*mm - 14*mm
+    else:
+        subtitle_y = line1_y - 14*mm
+
+    # 6. Subtitle — Helvetica-Bold 16pt, Emerald 900
+    c.setFillColor(HexColor("#04563E"))
+    c.setFont("Helvetica-Bold", 16)
+    c.drawString(22*mm, subtitle_y, subtitle)
+
+    # 7. Metadata block — starting at 23% from bottom, 7mm line spacing
+    y = h * 0.23
+    for label, value in metadata.items():
+        c.setFont("Helvetica-Bold", 12)
+        c.setFillColor(HexColor("#09242E"))
+        c.drawString(22*mm, y, f"{label}:")
+        lw = c.stringWidth(f"{label}:", "Helvetica-Bold", 12)
+        c.setFont("Helvetica", 12)
+        c.drawString(22*mm + lw + 2*mm, y, value)
+        y -= 7*mm
+
+    # 8. Footer — divider line + branded text
+    c.setStrokeColor(HexColor("#DDDDDD"))
+    c.setLineWidth(0.5)
+    c.line(20*mm, 18*mm, w - 20*mm, 18*mm)
+    c.setFont("Helvetica", 7)
+    c.setFillColor(HexColor("#179F65"))
+    footer_left = f"{' '.join(title_lines)} - {subtitle} | ZenLabs"
+    c.drawString(22*mm, 12*mm, footer_left)
+    c.drawRightString(w - 22*mm, 12*mm, "Page 1")
+```
+
+**Critical cover page rules:**
+- Logo: MUST be `logo-dark-on-light.png` (dark logo on white background) — NOT `logo-light-on-dark.png`. Use `ImageReader` for proper alpha channel support. NO header bar. MUST have white backing rectangle behind logo to prevent gradient bleed-through.
+- Title font: MUST be Helvetica-Bold 48pt — NOT Rubik, NOT 28pt, NOT 52pt
+- Title position: baseline at 62% from bottom of page, with 18mm gap between line baselines
+- Subtitle: 14mm below second title line
+- Gradient: MUST use smooth radial fade (150+ steps with power-curve alpha) — do NOT use concentric arc patterns or 3-layer circles. Two layers: main gradient from right edge + upper-right accent.
+- Footer separator: pipe `|` not slash `/`
+- Metadata: 12pt, starts at 23% from bottom with 7mm spacing between lines
+
+#### Table Alignment Rules
+
+Use `compact=True` for WBS tables (6-column) to prevent excessive padding. Standard `make_table` uses 4pt padding; compact mode uses 3pt padding + 10pt leading to keep rows tight and visually consistent with 3-column tables.
+
+```python
+def make_table(headers, rows, col_widths=None, compact=False):
+    td_style = ParagraphStyle('td', parent=body_style, fontSize=8,
+                              leading=10 if compact else 11)
+    # ... padding = 3 if compact else 4
+```
+
+All WBS phase tables (6 columns: ID, Module, Scope, Depends On, Risk, Man-Days) MUST use `compact=True`.
+
+WBS 6-column widths (as ratio of available width): `[0.05, 0.15, 0.45, 0.10, 0.13, 0.12]` — MUST sum to 1.00 so the table spans full width. All tables must be full-width (column ratios summing to 1.0) to ensure consistent left/right alignment across pages.
+
+#### Table Grid Color
+
+Table grid lines MUST use neutral gray `#E0E0E0` — NOT `FIREFLY_200` (light blue `#C0E0EF`). The blue grid clashes with the warm Ecru alternating row backgrounds.
+
+```python
+('GRID', (0, 0), (-1, -1), 0.5, HexColor("#E0E0E0")),
+```
+
+#### Risk Badge Style (Modern Pill)
+
+Risk columns MUST use rounded pill badges — NOT full-cell background fills. Use a `RiskPill` Flowable:
+
+```python
+class RiskPill(Flowable):
+    """Modern rounded pill badge for risk level."""
+    def __init__(self, level):
+        super().__init__()
+        self.level = level.strip()
+
+    def wrap(self, availWidth, availHeight):
+        self._avail_w = availWidth
+        return (availWidth, 5 * mm)
+
+    def draw(self):
+        c = self.canv
+        color_map = {
+            "Low":    (HexColor("#179F65"), HexColor("#FFFFFF")),
+            "Medium": (HexColor("#EB7E11"), HexColor("#FFFFFF")),
+            "High":   (HexColor("#F03333"), HexColor("#FFFFFF")),
+        }
+        bg, fg = color_map.get(self.level, (HexColor("#EB7E11"), HexColor("#FFFFFF")))
+        c.setFont("Helvetica-Bold", 6.5)
+        tw = c.stringWidth(self.level, "Helvetica-Bold", 6.5)
+        pill_w = self._avail_w - 2 * mm  # adaptive — fill cell with 1mm margin each side
+        pill_h = 3.5 * mm
+        pill_r = pill_h / 2   # fully rounded ends
+        x = (self._avail_w - pill_w) / 2
+        y = 0.5 * mm
+        c.setFillColor(bg)
+        c.roundRect(x, y, pill_w, pill_h, pill_r, fill=1, stroke=0)
+        c.setFillColor(fg)
+        c.drawString(x + (pill_w - tw) / 2, y + 1 * mm, self.level)
+```
+
+In `make_risk_table`, replace risk column text cells with `RiskPill(level)` flowables instead of applying cell-level BACKGROUND styles.
+
+#### Risk Register Rules
+
+- Only include **High** and **Medium** risk items in the Risk Register
+- Do NOT include Low-likelihood risks — they clutter the register and dilute focus
+- Each risk must have: ID, Description, Likelihood (High/Medium), Impact (High/Medium), Mitigation Strategy
+
+#### Estimation Rules (AI-Augmented Team)
+
+- Estimates assume an AI-native team using Claude Code, Figma AI, Dify, and AI-assisted testing
+- Estimates should be approximately 50% of traditional (non-AI) estimates
+- Always include a note: "Without AI tooling, estimates would be 2–3x higher"
+
+#### Proposed Milestones Section
+
+Every WBS MUST include a "Proposed Milestones" section that breaks features into 3 delivery milestones:
+- **Milestone 1**: Foundation — must contain ZERO high-risk modules. Only Low and Medium risk. This is the "safe bet" delivery.
+- **Milestone 2**: Core differentiators — can include High-risk modules, but all spikes/POCs should be completed in M1 or early M2 to de-risk.
+- **Milestone 3**: Polish, gamification, admin, QA, launch.
+
+Each milestone should include a table with Module, Risk, Man-Days columns and a subtotal.
 
 ### Phase 6: PDF Quality Assurance (Blocking)
 

@@ -19,6 +19,10 @@ Every plan needs an identifier for the directory name. Check if the current git 
 
 ## Workflow
 
+### 0. Read Project CLAUDE.md
+
+Before starting, check if the repository (cwd or the target repo) has a `CLAUDE.md` at its root. If it exists, read it — it contains project-specific conventions, architecture context, and patterns that should inform the plan. Pass relevant context to investigation agents.
+
 ### 1. Challenge the problem
 Read `references/plan-workflow.md` Phase 1. Before planning how, ask whether and why. Present your assessment to the user.
 

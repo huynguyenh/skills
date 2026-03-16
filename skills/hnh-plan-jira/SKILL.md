@@ -14,7 +14,11 @@ Accept:
 - Bare ID: `APKNOWLEDG-640`, `TICKET-123`
 - From branch: extract ticket ID from current git branch if it matches `{type}/{TICKET}-description`
 
-## Phase 0: Fetch Jira Ticket
+## Phase 0a: Read Project CLAUDE.md
+
+Before starting, check if the repository (cwd or the target repo) has a `CLAUDE.md` at its root. If it exists, read it — it contains project-specific conventions, architecture context, and patterns that should inform the plan. Pass relevant context to investigation agents.
+
+## Phase 0b: Fetch Jira Ticket
 
 Read `~/.zshrc` for `JIRA_BASE_URL`, `JIRA_EMAIL`, `JIRA_API_TOKEN`, then:
 
