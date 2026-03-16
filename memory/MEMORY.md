@@ -1,7 +1,7 @@
 # User Preferences
 
 ## Local Code Path
-- All repos are stored locally under `/Users/hnh/ws/code/github.com/88labs`
+- All repos are stored locally under `/Users/hnh/ws/code/github.com/`
 - Always check local repos first before cloning or looking elsewhere
 
 ## Git Commits

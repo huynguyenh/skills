@@ -29,7 +29,7 @@ Back up the portable parts of the Claude workspace to GitHub, stripping credenti
 - **Marketplace skills** (claude-api, pdf, xlsx, docx, pptx, doc-coauthoring, web-artifacts-builder, webapp-testing, skill-creator, canvas-design, frontend-design, brand-guidelines, internal-comms, keybindings-help, simplify, loop)
 - **Sensitive memory files:** `credentials.md`, `service-mapping.md` — these contain tokens or company-specific mappings
 - **Plans:** `~/.claude/plans/` — contain company-specific work content (ticket numbers, implementation details)
-- **Company-specific memory:** `andpad-conventions.md`, `repo-and-pr-conventions.md` — tied to a specific employer
+- **Company-specific memory:** employer-specific convention files — tied to a specific employer
 - **Local-only rules:** any rule file NOT prefixed with `global-` (e.g., `workspace.md` is local, `global-claude.md` gets backed up)
 - **Settings:** `settings.json`, `settings.local.json`, `.claude.json`
 - **Runtime data:** debug/, telemetry/, cache/, backups/, `.env` files

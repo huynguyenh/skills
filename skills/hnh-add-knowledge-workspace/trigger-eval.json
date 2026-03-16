@@ -2,7 +2,7 @@
   {"query": "hey btw the ZenLabs Notion workspace token changed, the new one is ntn_abc123xyz — can you update that?", "should_trigger": true},
   {"query": "I just realized our Google Drive has a new folder called '8. Templates' that we set up last week for client onboarding docs. Can you add it to the knowledge base?", "should_trigger": true},
   {"query": "rescan our google drive and notion and make sure the knowledge base is up to date with everything ZenLabs related", "should_trigger": true},
-  {"query": "note that when deploying our Go services we always use multi-stage Docker builds with alpine base images — its a team convention at 88labs", "should_trigger": true},
+  {"query": "note that when deploying our Go services we always use multi-stage Docker builds with alpine base images — its a team convention", "should_trigger": true},
   {"query": "oh I learned something interesting today — if you set GOMAXPROCS to match your container CPU limit, Go apps run way more predictably in k8s", "should_trigger": true},
   {"query": "we just hired a new developer named Minh, her email is <email> and she's starting next Monday as a full-stack dev", "should_trigger": true},
   {"query": "can you audit my knowledge base? I feel like some of the Drive folder IDs might be stale since we reorganized things last month", "should_trigger": true},
