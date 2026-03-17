@@ -71,6 +71,7 @@ export GITHUB_WORK_USERNAME="your-github-username"
 | **hnh-design-guideline** | Generating any visual output (PDFs, presentations, HTML, spreadsheets) or mention "brand", "our colors", "our fonts" | ZenLabs brand design system — colors (Emerald, Firefly, Ecru palettes), typography (Rubik/Inter), spacing, and logo usage rules for all generated visual outputs. Consulted automatically before choosing colors/fonts for any ZenLabs deliverable. |
 | **hnh-dify** | Say "in Dify", "run my Dify workflow", "check Dify logs", or mention Dify apps | Interact with Dify.ai — run workflows, chat with apps, manage knowledge bases, view logs, upload files, and manage conversations via the Dify Service API. |
 | **hnh-discord** | Say "in Discord", "on Discord", "post to Discord", or share a Discord link | Interact with Discord — read/send messages, search, react, pin, manage threads, browse channels and members via the Discord Bot API. |
+| **hnh-facebook-manual** | Share a facebook.com URL, say "FB", "check this post", "get comments", or ask about reactions/shares | Interact with Facebook via browser automation — fetch comments, reactions, shares, post content, and perform actions like liking and commenting using the Chrome Claude Extension. |
 | **hnh-gg-docs** | Say "Google Doc", share a docs.google.com URL, or mention creating/reading docs in Google Drive | Interact with Google Docs — read content, create documents, append text, find-and-replace, and get document metadata via the Google Docs API. |
 | **hnh-maintain-skills** | Say "maintain skills", "skill audit", or "review skills" | Scans all custom skills for improvement opportunities — detects raw API calls replaceable by wrapper skills, stale file references, credential anti-patterns, missing cross-references, and duplicated logic. |
 | **hnh-wbs** | Say "WBS", "scope this project", "break this down", or share a project brief | CTO-level Work Breakdown Structure generator — evaluates multiple technical approaches across the full SDLC, recommends the best option, and produces a branded PDF. Supports scope mode (no estimates) and estimate mode (AI-augmented man-day estimates). |
@@ -91,6 +92,7 @@ skills/                # Custom skills
   hnh-design-guideline/ #  ZenLabs brand design system (colors, fonts, logos)
   hnh-dify/            #   Dify.ai workflow & knowledge base interaction
   hnh-discord/         #   Discord interaction via Bot API
+  hnh-facebook-manual/ #   Facebook browser automation via Chrome Claude Extension
   hnh-gg-docs/         #   Google Docs interaction via API
   hnh-gg-drive/        #   Google Drive file management via API
   hnh-gg-sheets/       #   Google Sheets interaction via API

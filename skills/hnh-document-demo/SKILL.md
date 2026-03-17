@@ -11,7 +11,7 @@ Package a completed build session into a polished, shareable markdown document t
 ## What This Skill Produces
 
 ```
-demo-{id}/
+demo-{project}/{sequence}/
 ├── {slug}.md              ← Main document (the star)
 ├── {slug}.pdf             ← Branded PDF (optional, if user wants)
 ├── assets/
@@ -22,6 +22,22 @@ demo-{id}/
 │   └── *.mp4              ← Screen recordings (user-provided)
 └── generate-pdf.py        ← PDF generation script (if PDF was created)
 ```
+
+### Folder Structure
+
+Demos are grouped by project and sequentially numbered within each project:
+
+```
+demo-1/              ← Project 1 (e.g., web app)
+  1/                 ← First session
+  2/                 ← Second session
+demo-2/              ← Project 2 (e.g., VNKB)
+  1/                 ← First session (building the app)
+  2/                 ← Second session (bugfix speed run)
+  3/                 ← Third session (agent swarm debugging)
+```
+
+When the user provides a demo ID like "2/3", it means project 2, session 3 → directory `demo-2/3/`.
 
 ## Workflow
 
@@ -164,14 +180,14 @@ If the user provides screen recordings (.mov, .mp4), convert/optimize them and p
 
 After the document is written, ask the user:
 
-> "What demo ID should I use? (e.g., 1, 1.a, 2, 3)"
+> "What demo ID should I use? Format: {project}/{sequence} (e.g., 2/3 for project 2, session 3)"
 
-This becomes the directory name: `demo-{id}`
+This becomes the directory path: `demo-{project}/{sequence}/`
 
 ### Phase 5: Package and Push
 
 1. **Create the output directory** at `~/ws/docs/zenlabs/ai-experience-sharing/` (or wherever the source docs live) — this is the working copy
-2. **Copy to the repo** — clone or pull `zenlbs/build-with-ai` to `~/ws/code/github.com/zenlbs/build-with-ai/`, then copy the package into `demo-{id}/`
+2. **Copy to the repo** — clone or pull `zenlbs/build-with-ai` to `~/ws/code/github.com/zenlbs/build-with-ai/`, then copy the package into `demo-{project}/{sequence}/`
 3. **Configure git** before committing:
    ```
    git config user.name "huynguyenh"
@@ -179,7 +195,7 @@ This becomes the directory name: `demo-{id}`
    ```
 4. **Commit and push:**
    ```
-   git add demo-{id}/
+   git add demo-{project}/{sequence}/
    git commit -m "Add demo-{id}: {short description}"
    git push
    ```
