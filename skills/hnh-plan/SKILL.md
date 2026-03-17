@@ -48,6 +48,15 @@ Follow the Plan Template in `references/plan-workflow.md`. Save to `~/.claude/pl
 ### 6. Review
 Show the plan. Iterate until the user is satisfied.
 
+### 7. QA Verification (during implementation)
+After each implementation step, run the QA Verifier agent (`agents/qa-verifier.md`). **Never ship code without verification.**
+
+| Agent | File | What it does |
+|-------|------|-------------|
+| QA Verifier | `agents/qa-verifier.md` | Build check, mechanism isolation test, integration verification, regression check |
+
+**Critical rule**: For system-level features (event handling, keyboard input, OS APIs, networking), always write and run a standalone test script that verifies the mechanism in isolation BEFORE integrating it into the app.
+
 ## Credential Reference
 
 Tokens in `~/.zshrc` — read and inline literal values. See `~/.claude/rules/global-credentials.md`.

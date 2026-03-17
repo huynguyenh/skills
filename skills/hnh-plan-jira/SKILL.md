@@ -67,6 +67,9 @@ Follow the Plan Template in `~/.claude/skills/hnh-plan/references/plan-workflow.
 ### 6. Review
 Show the plan. Iterate until satisfied.
 
+### 7. QA Verification (during implementation)
+After each implementation step, run the QA Verifier agent (`~/.claude/skills/hnh-plan/agents/qa-verifier.md`). **Never ship code without verification.** For system-level features, always write and run a standalone test script to verify the mechanism in isolation first.
+
 ## Credential Reference
 
 Tokens in `~/.zshrc` — read and inline literal values. See `~/.claude/rules/global-credentials.md`.

@@ -41,4 +41,4 @@ See [git-identity.md](git-identity.md) — for zenlbs or personal repos, configu
 - `/hnh-dify` — Interact with Dify.ai (run workflows, chat with apps, manage knowledge bases, view logs)
 - `/hnh-gg-docs` — Interact with Google Docs (read, create, append text, find-and-replace, metadata)
 - `/hnh-wbs` — CTO-level Work Breakdown Structure generator (SDLC coverage, multi-approach evaluation, branded PDF)
-- `/hnh-document-demo` — Package a build session into a shareable demo doc (markdown + screenshots) and push to zenlbs/build-with-ai
+- `/hnh-document-demo` — Package build sessions into shareable demo docs (markdown + screenshots, pushed to `zenlbs/build-with-ai`)

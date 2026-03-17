@@ -33,7 +33,10 @@ Before writing anything, review what happened in this session:
 2. **What techniques were used** — prompting patterns, debugging approaches, how problems were solved
 3. **What skills were invoked** — which wrapper skills (`hnh-review-pr`, `hnh-design-guideline`, etc.) played a role
 4. **What went wrong and how it was fixed** — bugs found, root causes discovered, interesting debugging moments
-5. **What the user explicitly asked to highlight** — they may have called out specific insights during the session
+5. **Where we struggled** — things that took multiple attempts, scope cuts, AI looping on dead-end approaches
+6. **What we learned** — both domain knowledge and meta-lessons about the AI collaboration
+7. **What to improve for next time** — skills to create, knowledge to capture, process changes (THIS IS THE MOST IMPORTANT — it creates the compounding improvement loop)
+8. **What the user explicitly asked to highlight** — they may have called out specific insights during the session
 
 The document should read like a senior engineer sharing hard-won insights with their team, not like a changelog or feature list.
 
@@ -80,6 +83,55 @@ what the reader should learn from it.}
 - "Debugging: From Symptom to Root Cause"
 - "Shipping: The Automated Pipeline"
 - etc.}
+
+---
+
+## Where We Struggled
+
+{Honest account of what went wrong — for BOTH the human and the AI.
+Not a blame list. Each struggle should name:
+1. The symptom (what we saw)
+2. Why it was hard (what made it non-obvious)
+3. How many attempts it took
+4. What finally fixed it — or if we cut scope
+
+Include things like: AI looping on approaches that couldn't work,
+undocumented platform behaviors, tooling gaps that slowed us down,
+scope decisions that should have been made earlier.}
+
+---
+
+## What We Learned Along the Way
+
+{Split into two sub-sections:}
+
+### About {Domain/Technology}
+{Technical lessons specific to the domain — the kind of thing
+you'd tell a colleague starting a similar project.}
+
+### About Working with AI
+{Meta-lessons about the collaboration itself — when AI was
+effective, when it wasn't, what patterns worked, what to avoid.}
+
+---
+
+## Making the Next Demo Smoother
+
+{THE MOST IMPORTANT SECTION. Every struggle above should map to
+a concrete improvement:
+
+- **Skills to create** — new wrapper skills that would have
+  prevented wasted time (e.g., native screenshot skill)
+- **Knowledge to capture** — domain knowledge to add to
+  ~/.claude/knowledge/ so the AI doesn't repeat mistakes
+- **Process changes** — rules or conventions to add
+  (e.g., "cut scope after 3 failed attempts")
+- **Skill updates** — improvements to existing skills based
+  on what we hit during this session
+
+Each item should be actionable with a clear "to build", "to add",
+or "done" status. This section creates a compounding improvement
+loop: each demo identifies what to build for the next one.}
 
 ---
 
@@ -146,3 +198,5 @@ If the user wants a branded PDF, use the `/hnh-design-guideline` skill for brand
 **Adapt to what actually happened.** If the session was about debugging a nasty CSS issue, the document should go deep on the debugging process. If it was about building a full app from scratch, focus on the architecture decisions and iteration speed. Don't force a template.
 
 **The user's voice matters.** When the user explicitly states insights during the session (like "the biggest win is the feedback loop speed"), those become the lead takeaways — expanded with specifics, but preserving their original framing.
+
+**The improvement loop is mandatory.** Every document MUST end with "Making the Next Demo Smoother" — concrete, actionable items (skills to create, knowledge to capture, process changes). This is the compounding mechanism: each demo makes the next one better. If the session had no struggles, the section should say so explicitly (that's a signal the system is working).

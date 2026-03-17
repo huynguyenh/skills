@@ -30,13 +30,17 @@ def get_headers(token):
 def api_request(method, path, token, data=None, params=None):
     """Make an API request, handle errors and rate limits."""
     url = f"{BASE_URL}/{path}"
-    headers = get_headers(token)
+    headers = {"Authorization": f"Bot {token}"}
+    # Only set Content-Type when sending a JSON body to avoid
+    # Discord 400 "invalid JSON" on bodiless DELETE/PUT requests.
+    if data is not None:
+        headers["Content-Type"] = "application/json"
     resp = requests.request(method, url, headers=headers, json=data, params=params)
 
     # Handle rate limiting
     if resp.status_code == 429:
         retry_after = resp.json().get("retry_after", 1)
-        time.sleep(retry_after)
+        time.sleep(retry_after + 0.5)
         resp = requests.request(method, url, headers=headers, json=data, params=params)
 
     if resp.status_code >= 400:
@@ -398,6 +402,111 @@ def cmd_channel_info(args):
     print(json.dumps(info, ensure_ascii=False))
 
 
+def cmd_emojis(args):
+    """List all custom emojis in a guild."""
+    token = args.token
+    guild_id = args.guild_id
+
+    result = api_request("GET", f"guilds/{guild_id}/emojis", token)
+
+    emojis = []
+    for e in result:
+        emojis.append({
+            "id": e["id"],
+            "name": e["name"],
+            "animated": e.get("animated", False),
+        })
+
+    if args.animated_only:
+        emojis = [e for e in emojis if e["animated"]]
+    elif args.static_only:
+        emojis = [e for e in emojis if not e["animated"]]
+
+    static = sum(1 for e in emojis if not e["animated"])
+    animated = sum(1 for e in emojis if e["animated"])
+
+    print(json.dumps({
+        "count": len(emojis),
+        "static": static,
+        "animated": animated,
+        "emojis": emojis,
+    }, ensure_ascii=False))
+
+
+def cmd_emoji_create(args):
+    """Create a custom emoji from a URL or local file."""
+    import base64
+
+    token = args.token
+    guild_id = args.guild_id
+    name = args.name
+
+    if args.url:
+        resp = requests.get(args.url, timeout=15)
+        if resp.status_code != 200:
+            print(json.dumps({"error": f"Failed to download image: {resp.status_code}"}), file=sys.stderr)
+            sys.exit(1)
+        img_data = resp.content
+    elif args.file:
+        with open(args.file, "rb") as f:
+            img_data = f.read()
+    else:
+        print(json.dumps({"error": "Provide --url or --file"}), file=sys.stderr)
+        sys.exit(1)
+
+    if len(img_data) > 256_000:
+        print(json.dumps({"error": f"Image too large ({len(img_data)} bytes, max 256KB)"}), file=sys.stderr)
+        sys.exit(1)
+
+    # Detect mime type from content
+    if img_data[:4] == b"GIF8":
+        mime = "image/gif"
+    elif img_data[:8] == b"\x89PNG\r\n\x1a\n":
+        mime = "image/png"
+    elif img_data[:2] in (b"\xff\xd8",):
+        mime = "image/jpeg"
+    else:
+        mime = "image/png"
+
+    b64 = base64.b64encode(img_data).decode()
+    data_uri = f"data:{mime};base64,{b64}"
+
+    result = api_request("POST", f"guilds/{guild_id}/emojis", token, data={"name": name, "image": data_uri})
+
+    print(json.dumps({
+        "id": result["id"],
+        "name": result["name"],
+        "animated": result.get("animated", False),
+        "created": True,
+    }, ensure_ascii=False))
+
+
+def cmd_emoji_delete(args):
+    """Delete a custom emoji."""
+    token = args.token
+    guild_id = args.guild_id
+    emoji_id = args.emoji_id
+
+    api_request("DELETE", f"guilds/{guild_id}/emojis/{emoji_id}", token)
+
+    print(json.dumps({"id": emoji_id, "deleted": True}))
+
+
+def cmd_emoji_rename(args):
+    """Rename a custom emoji."""
+    token = args.token
+    guild_id = args.guild_id
+    emoji_id = args.emoji_id
+
+    result = api_request("PATCH", f"guilds/{guild_id}/emojis/{emoji_id}", token, data={"name": args.name})
+
+    print(json.dumps({
+        "id": result["id"],
+        "name": result["name"],
+        "renamed": True,
+    }, ensure_ascii=False))
+
+
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
@@ -500,6 +609,34 @@ def main():
     p = sub.add_parser("channel-info", help="Get detailed channel information")
     p.add_argument("channel_id", help="Channel ID")
     p.set_defaults(func=cmd_channel_info)
+
+    # emojis
+    p = sub.add_parser("emojis", help="List custom emojis in a guild")
+    p.add_argument("guild_id", help="Guild/server ID")
+    p.add_argument("--animated-only", action="store_true", help="Show only animated emojis")
+    p.add_argument("--static-only", action="store_true", help="Show only static emojis")
+    p.set_defaults(func=cmd_emojis)
+
+    # emoji-create
+    p = sub.add_parser("emoji-create", help="Create a custom emoji from URL or file")
+    p.add_argument("guild_id", help="Guild/server ID")
+    p.add_argument("--name", required=True, help="Emoji name (alphanumeric + underscores, min 2 chars)")
+    p.add_argument("--url", help="Image URL to download")
+    p.add_argument("--file", help="Local image file path")
+    p.set_defaults(func=cmd_emoji_create)
+
+    # emoji-delete
+    p = sub.add_parser("emoji-delete", help="Delete a custom emoji")
+    p.add_argument("guild_id", help="Guild/server ID")
+    p.add_argument("emoji_id", help="Emoji ID to delete")
+    p.set_defaults(func=cmd_emoji_delete)
+
+    # emoji-rename
+    p = sub.add_parser("emoji-rename", help="Rename a custom emoji")
+    p.add_argument("guild_id", help="Guild/server ID")
+    p.add_argument("emoji_id", help="Emoji ID to rename")
+    p.add_argument("--name", required=True, help="New emoji name")
+    p.set_defaults(func=cmd_emoji_rename)
 
     args = parser.parse_args()
 

@@ -2,12 +2,12 @@
 name: hnh-discord
 description: >
   Interact with Discord — read messages, send messages, search, react, pin, manage threads,
-  and browse channels and members via the Discord Bot API.
+  manage custom emojis, and browse channels and members via the Discord Bot API.
   Use this skill whenever the user mentions Discord, says "in Discord", "on Discord",
   "post to Discord", "check Discord", shares a Discord channel/message link, or wants to
   read/send/search messages in a Discord server. Also trigger when the user mentions
-  "server", "channel", or "thread" in a context that implies Discord. This skill is for
-  any Discord server the bot has been invited to.
+  "server", "channel", "thread", or "emoji" in a context that implies Discord. This skill
+  is for any Discord server the bot has been invited to.
 ---
 
 # Discord Skill
@@ -177,6 +177,45 @@ python3 <script> --token $TOKEN channel-info CHANNEL_ID
 ```
 
 Returns: channel name, type, topic, slowmode, last message ID.
+
+### emojis — List custom emojis in a guild
+
+```bash
+# All emojis
+python3 <script> --token $TOKEN emojis GUILD_ID
+
+# Only static emojis
+python3 <script> --token $TOKEN emojis GUILD_ID --static-only
+
+# Only animated emojis
+python3 <script> --token $TOKEN emojis GUILD_ID --animated-only
+```
+
+Returns: emoji list with id, name, animated flag, plus static/animated counts.
+
+### emoji-create — Upload a custom emoji
+
+```bash
+# From URL
+python3 <script> --token $TOKEN emoji-create GUILD_ID --name "pepe_happy" --url "https://example.com/emoji.png"
+
+# From local file
+python3 <script> --token $TOKEN emoji-create GUILD_ID --name "pepe_happy" --file /path/to/emoji.png
+```
+
+Image must be under 256KB. Supports PNG, GIF, JPEG. Emoji names must be alphanumeric + underscores, min 2 chars.
+
+### emoji-delete — Delete a custom emoji
+
+```bash
+python3 <script> --token $TOKEN emoji-delete GUILD_ID EMOJI_ID
+```
+
+### emoji-rename — Rename a custom emoji
+
+```bash
+python3 <script> --token $TOKEN emoji-rename GUILD_ID EMOJI_ID --name "new_name"
+```
 
 ## Workflow Patterns
 

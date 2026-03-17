@@ -320,8 +320,38 @@ Update this section when implementation is complete:
 - {Or: "Nothing — all acceptance criteria met, monitoring clean"}
 ```
 
+## Phase 6: QA Verification (During Implementation)
+
+**This phase runs during implementation, not during planning.** But the plan must account for it.
+
+Every implementation step must be verified before moving to the next step or shipping to the user. Read `agents/qa-verifier.md` for the full process.
+
+### Key Rule: Verify the Mechanism First
+
+For system-level features (event handling, keyboard input, networking, filesystem, OS APIs), **always write a minimal standalone test** that exercises the specific mechanism in isolation before integrating it into the app.
+
+This prevents the pattern of: "it should work in theory" → build → ship → broken → rebuild → ship → broken × 5.
+
+Examples:
+- Implementing keyboard shortcut capture? Write a 30-line script that captures keys and prints them. Run it. See it work. Then integrate.
+- Adding a CGEvent tap? Write a standalone tap that logs events. Run it. Verify. Then integrate.
+- Using a new API? Call it from a test script first. Confirm the response. Then use it in the app.
+
+### Verification Checklist (include in every plan)
+
+Add this to each Implementation Step:
+
+```markdown
+**Verification:**
+- [ ] Build passes with no new warnings
+- [ ] Core mechanism verified in isolation (standalone test script)
+- [ ] Integration verified (app runs correctly with this change)
+- [ ] Existing tests still pass
+- [ ] Confidence: High/Medium — never ship at Low
+```
+
 ## After Writing
 
 1. Show the full plan to the user
 2. Ask for feedback — iterate until they're satisfied
-3. Confirm: "Ready to start implementing? I'll follow this plan step by step and update the Report section as we go."
+3. Confirm: "Ready to start implementing? I'll follow this plan step by step, verify each step with the QA agent, and update the Report section as we go."

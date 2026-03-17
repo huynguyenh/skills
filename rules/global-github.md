@@ -10,3 +10,7 @@ This includes:
 - Issues and releases: `gh issue`, `gh release`
 
 The `gh` CLI manages authentication, handles multiple accounts, and produces consistent output. Using it avoids token leaks in command history and simplifies multi-account setups.
+
+## Branch Cleanup
+
+After merging a feature branch into main (or any target branch), always delete the feature branch — both remote and local. Don't leave stale branches around.
