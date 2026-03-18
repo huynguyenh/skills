@@ -42,3 +42,21 @@ See [git-identity.md](git-identity.md) — for zenlbs or personal repos, configu
 - `/hnh-gg-docs` — Interact with Google Docs (read, create, append text, find-and-replace, metadata)
 - `/hnh-wbs` — CTO-level Work Breakdown Structure generator (SDLC coverage, multi-approach evaluation, branded PDF)
 - `/hnh-document-demo` — Package build sessions into shareable demo docs (markdown + screenshots, pushed to `zenlbs/build-with-ai`)
+- `/hnh-zenlabs-release` — Set up CI/CD and deploy ZenLabs services (GitHub Actions, Docker, ECR, Helm, ArgoCD, secrets, DNS)
+- `/hnh-zenlabs-infras` — Real-time infrastructure health report (EKS, AWS services, Sentry error rates, endpoint checks)
+- `/hnh-get-report` — CEO-level project status report (backlog sheets, GitHub, Drive, Notion scanned in parallel)
+- `/hnh-record-screen` — Screen recording and video optimization (browser + desktop capture, compression)
+- `/hnh-aws` — AWS infrastructure interaction (S3, ECR, RDS, CloudWatch, IAM via AWS CLI)
+- `/hnh-k8s` — Kubernetes/EKS debugging and monitoring (pods, logs, events, resource usage via kubectl)
+- `/hnh-facebook-manual` — Facebook browser automation via Chrome Claude Extension (comments, reactions, shares)
+
+## ZenLabs CI/CD (AWS)
+- **Env vars:** `ZENLABS_AWS_ACCESS_KEY_ID`, `ZENLABS_AWS_SECRET_ACCESS_KEY`, `ZENLABS_DEVOPS_SSH_PRIVATE_KEY`, `ZENLABS_GO_COMMON_SSH_PRIVATE_KEY` in `~/.zshrc`
+- **AWS Account:** `478581585074`, Region: `ap-southeast-1`
+- **ECR:** `478581585074.dkr.ecr.ap-southeast-1.amazonaws.com/{service}`
+- **Note:** The IAM user (`github-action`) can push images but CANNOT create ECR repos — that requires AWS console admin access
+- **Skill:** `/hnh-zenlabs-release` handles the full pipeline setup
+
+# ENAT Project
+
+See [enat-design-guideline.md](enat-design-guideline.md) — brand color palette, typography, and visual style for the ENAT IMC 2026 campaign (green + yellow + gold).

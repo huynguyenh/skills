@@ -1,0 +1,23 @@
+{
+  "skill_name": "hnh-zenlabs-infras",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "how's our infra doing?",
+      "expected_output": "Full infrastructure health report covering EKS nodes, deployments, AWS metrics, RDS status, and Sentry errors. Should include overall status, tables, and action items.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "are we running hot on CPU or memory? should we scale?",
+      "expected_output": "Same full report but action items should specifically address CPU/memory thresholds and whether scaling is needed.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "infra report",
+      "expected_output": "Full infrastructure health report triggered by minimal phrase. Should produce the same comprehensive output.",
+      "files": []
+    }
+  ]
+}

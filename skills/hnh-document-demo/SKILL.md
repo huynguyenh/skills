@@ -168,13 +168,64 @@ loop: each demo identifies what to build for the next one.}
 
 ### Phase 3: Capture Screenshots
 
-Take screenshots of the built product to include in the document. Use the preview server if one is running, or Playwright for headless capture.
+Take screenshots of the built product to include in the document. Use Playwright for headless capture — **not** `npx playwright screenshot` (which captures too fast) and **not** preview_screenshot (which may conflict with other agents).
 
-**Desktop screenshots:** Full viewport at 1440x900 or similar
+**Method:** Write a Playwright script that navigates to each page, waits for content to load, then captures. Run it from the project directory so `require('playwright')` resolves.
+
+```javascript
+// screenshot-all.js — run with: node screenshot-all.js
+const { chromium } = require('playwright');
+const path = require('path');
+
+const outDir = '/path/to/assets/screenshots';
+const pages = [
+  { url: '/', name: '01-landing.png' },
+  // ... add all pages
+];
+
+(async () => {
+  const browser = await chromium.launch();
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  for (const p of pages) {
+    const page = await ctx.newPage();
+    await page.goto('http://localhost:PORT' + p.url, { waitUntil: 'networkidle' });
+    await page.waitForTimeout(2500); // CRITICAL: wait for Framer Motion / CSS animations
+    await page.screenshot({ path: path.join(outDir, p.name), fullPage: false });
+    console.log('Captured:', p.name);
+    await page.close();
+  }
+  await browser.close();
+})();
+```
+
+**Why the 2.5s delay matters:** Pages using Framer Motion animate content from `opacity: 0` on mount. Without waiting, screenshots capture invisible content — just backgrounds with no text. The `waitUntil: 'networkidle'` handles data loading, but animations need explicit time.
+
+**Desktop screenshots:** Full viewport at 1440x900
 **Mobile screenshots:** 390x844 viewport for responsive layouts
 **Naming:** Sequential numbering — `01-keywords.png`, `02-reports-list.png`, etc.
 
+**Always verify screenshots after capture** — read at least 2 screenshots back (first and last) to confirm content is visible. If content is missing, increase the wait timeout.
+
 If the user provides screen recordings (.mov, .mp4), convert/optimize them and place in `assets/`.
+
+Clean up the screenshot script after use (`rm screenshot-all.js`).
+
+### Phase 3.5: Quality Check (Agent)
+
+After writing the document and capturing screenshots, **spawn a QA agent** to review the document quality before pushing. The agent should:
+
+1. **Read the full markdown document**
+2. **Check structure:** Does it follow the template? Are all required sections present (Key Takeaways, What I Built, Where We Struggled, Making the Next Demo Smoother)?
+3. **Check screenshots:** Read each screenshot image file and verify it shows actual content (not blank/broken pages). Flag any that look empty or have invisible text.
+4. **Check content quality:**
+   - Are takeaways specific (with real examples) or generic fluff?
+   - Does "Where We Struggled" include honest failures, not just humble-brags?
+   - Does "Making the Next Demo Smoother" have actionable items with status?
+   - Are there actual technical details (hex codes, file paths, command examples)?
+5. **Check links:** Are relative image paths correct? Do they match the files in `assets/screenshots/`?
+6. **Report issues** — the agent should return a list of problems to fix before pushing.
+
+Only push to the repo after the QA agent confirms the document is ready.
 
 ### Phase 4: Ask for Demo ID
 

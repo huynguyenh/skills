@@ -16,6 +16,7 @@ When interacting with external services that have a dedicated wrapper skill, ALW
 | AWS | `hnh-aws` → `aws` CLI | S3, ECR, RDS, CloudWatch, IAM operations |
 | Kubernetes/EKS | `hnh-k8s` → `kubectl` | Pod debugging, logs, events, resource monitoring |
 | GitHub | `gh` CLI (not curl) | PRs, issues, releases, API calls |
+| ZenLabs CI/CD | `hnh-zenlabs-release` | Deploy new service, set up pipeline, release, ArgoCD, ECR, Helm |
 
 ## What NOT to do
 

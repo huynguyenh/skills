@@ -1,0 +1,42 @@
+{
+  "eval_id": 1,
+  "eval_name": "infra-health-casual",
+  "prompt": "how's our infra doing?",
+  "assertions": [
+    {
+      "id": "has-overall-status",
+      "text": "Report includes an overall status (HEALTHY/DEGRADED/CRITICAL)",
+      "type": "content_check"
+    },
+    {
+      "id": "has-node-table",
+      "text": "Report includes a node health table with CPU/memory percentages",
+      "type": "content_check"
+    },
+    {
+      "id": "has-deployments",
+      "text": "Report lists deployments with ready/desired replica counts",
+      "type": "content_check"
+    },
+    {
+      "id": "has-rds-status",
+      "text": "Report includes RDS database status and metrics",
+      "type": "content_check"
+    },
+    {
+      "id": "has-sentry-section",
+      "text": "Report includes Sentry error rates or application health section",
+      "type": "content_check"
+    },
+    {
+      "id": "has-action-items",
+      "text": "Report ends with action items or states no action needed",
+      "type": "content_check"
+    },
+    {
+      "id": "uses-severity-levels",
+      "text": "Issues are classified with severity (CRITICAL/WARNING/OK)",
+      "type": "content_check"
+    }
+  ]
+}
