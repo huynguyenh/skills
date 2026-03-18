@@ -1,1 +1,0 @@
-Updated **personal/zenlabs** — fixed the Notion workspace name from "Zen Labs" to "ZenLabs" and updated the integration name from "Claude Integration" to "Claude Bot" (all three references in the Notion section).

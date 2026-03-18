@@ -1,1 +1,0 @@
-Updated **personal/zenlabs-employees** -- added "Ray" as a nickname for Hao and corrected the GitHub entry to use the actual username `haoxray` (was previously stored as an email). Discord ID was already on file, so no change there.
