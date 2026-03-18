@@ -70,6 +70,17 @@ Show the plan. Iterate until satisfied.
 ### 7. QA Verification (during implementation)
 After each implementation step, run the QA Verifier agent (`~/.claude/skills/hnh-plan/agents/qa-verifier.md`). **Never ship code without verification.** For system-level features, always write and run a standalone test script to verify the mechanism in isolation first.
 
+### 8. PR creation
+After implementation is complete, ask the user: **"Should I create a PR?"** If yes:
+1. Create the PR
+2. Run `/hnh-review-pr` on the PR
+3. Fix all findings from the review
+4. Report back with the final PR link
+
+## Implementation Discipline
+
+**The approved plan is a contract.** Implement it exactly as written — do not simplify, flatten, or skip parts of the plan during implementation. If you realize a change would be better mid-implementation, STOP and ask the user before deviating. Never silently change the approach.
+
 ## Credential Reference
 
 Tokens in `~/.zshrc` — read and inline literal values. See `~/.claude/rules/global-credentials.md`.

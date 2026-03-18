@@ -32,6 +32,7 @@ Back up the portable parts of the Claude workspace to GitHub, stripping credenti
 - **Company-specific memory:** `andpad-conventions.md`, `repo-and-pr-conventions.md` — tied to a specific employer
 - **Local-only rules:** any rule file NOT prefixed with `global-` (e.g., `workspace.md` is local, `global-claude.md` gets backed up)
 - **Settings:** `settings.json`, `settings.local.json`, `.claude.json`
+- **Skill workspaces:** `hnh-*-workspace/` — eval iterations, benchmarks, grading outputs from `/hnh-create-skill`. Only useful locally during skill development.
 - **Runtime data:** debug/, telemetry/, cache/, backups/, `.env` files
 
 ## Repo structure
@@ -113,9 +114,9 @@ mkdir -p "$REPO/skills" "$REPO/memory" "$REPO/rules"
 # CLAUDE.md (global index)
 cp ~/.claude/CLAUDE.md "$REPO/CLAUDE.md"
 
-# Custom skills
+# Custom skills (exclude workspace directories — eval iterations are local-only)
 for skill_dir in ~/.claude/skills/hnh-*; do
-  [ -d "$skill_dir" ] && cp -r "$skill_dir" "$REPO/skills/"
+  [ -d "$skill_dir" ] && [[ "$(basename "$skill_dir")" != *-workspace ]] && cp -r "$skill_dir" "$REPO/skills/"
 done
 # (plus any other custom skills the user confirmed)
 

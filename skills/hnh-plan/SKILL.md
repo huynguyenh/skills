@@ -57,6 +57,17 @@ After each implementation step, run the QA Verifier agent (`agents/qa-verifier.m
 
 **Critical rule**: For system-level features (event handling, keyboard input, OS APIs, networking), always write and run a standalone test script that verifies the mechanism in isolation BEFORE integrating it into the app.
 
+### 8. PR creation
+After implementation is complete, ask the user: **"Should I create a PR?"** If yes:
+1. Create the PR
+2. Run `/hnh-review-pr` on the PR
+3. Fix all findings from the review
+4. Report back with the final PR link
+
+## Implementation Discipline
+
+**The approved plan is a contract.** Implement it exactly as written — do not simplify, flatten, or skip parts of the plan during implementation. If you realize a change would be better mid-implementation, STOP and ask the user before deviating. Never silently change the approach.
+
 ## Credential Reference
 
 Tokens in `~/.zshrc` — read and inline literal values. See `~/.claude/rules/global-credentials.md`.
