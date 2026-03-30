@@ -340,6 +340,69 @@ logo = Image(LOGO_PATH, width=50*mm, height=12*mm)
 - Avoid jargon when possible
 - Use active voice
 
+## Excalidraw Diagrams
+
+When generating architecture diagrams, system diagrams, or flowcharts in Excalidraw (via `/hnh-excalidraw`), use this style:
+
+### Style: Monochrome + Green Accent
+
+ZenLabs diagrams use a clean, hand-drawn aesthetic — monochrome with a single green accent. No rainbow colors, no filled boxes.
+
+### Colors
+
+| Element | Hex | Notes |
+|---|---|---|
+| Canvas / box fill | `#FFFFFF` | White — all service boxes are unfilled |
+| Service box stroke | `#000000` | Black, solid, ~2-3px |
+| Zone container stroke | `#1e7a5e` | Dark teal/green, dashed, ~2px |
+| Zone label text | `#1e7a5e` | Same dark green |
+| Namespace stroke | `#43CE81` | Emerald 500, dashed, ~2px |
+| Namespace label text | `#43CE81` | Same lighter green |
+| Arrows | `#000000` | Black, solid, ~2px |
+| Severity OK | `#179F65` | Green |
+| Severity Warning | `#EB7E11` | Orange |
+| Severity Critical | `#F03333` | Red |
+
+### Stroke Rules
+
+| Element | Stroke Style |
+|---|---|
+| Zone containers (VPC, DNS, Data Layer) | **Dashed**, rounded corners |
+| Namespace groups (inside EKS) | **Dashed**, rounded corners, lighter green |
+| Service/component boxes | **Solid**, rounded corners |
+| Placeholder/future boxes | **Dashed**, black |
+| Arrows | **Solid** |
+
+### Typography
+
+Use Excalidraw's default hand-drawn font (Virgil) throughout — never switch to a formal font.
+
+| Element | Size |
+|---|---|
+| Title | ~28px |
+| Zone labels | ~20px |
+| Namespace labels | ~18px |
+| Service box text | ~16-18px |
+| Secondary labels | ~14px |
+
+### Layout
+
+- **Top-down flow** (Users → DNS → LB → Compute → Data)
+- **Center-aligned** main flow, sidebars on left (Monitoring, Gitops)
+- **Nesting**: up to 3 levels (VPC → EKS → Namespace → Service)
+- **No fills** — visual hierarchy via stroke style (dashed = group, solid = component)
+- **Spacing**: 40-60px vertical between boxes, 30-40px horizontal, 30-40px zone padding
+
+### Key Principles
+
+1. **Monochrome + one green accent** — never use multiple colors for different services
+2. **Hand-drawn font** — matches Excalidraw's whiteboard aesthetic
+3. **Dashed = grouping, solid = components** — the only visual hierarchy rule needed
+4. **No background fills** — keeps diagrams clean and printable
+5. **Sidebars separated** from main flow — supporting systems (monitoring, CI/CD) sit to the left
+
+---
+
 ## CRITICAL Cover Page Rules
 
 These rules override any older pattern or memory. Always apply them when generating PDF cover pages:

@@ -43,7 +43,7 @@ Save the PR URL, title, body, head branch, and diff for use in later phases.
 
 ### Phase 2: Parallel Work
 
-Launch all 5 agents in parallel (all in a single tool-call turn). Each agent's detailed instructions are in its own file under `agents/` — read the file and pass its contents as the agent prompt.
+Launch all 6 agents in parallel (all in a single tool-call turn). Each agent's detailed instructions are in its own file under `agents/` — read the file and pass its contents as the agent prompt.
 
 | Agent | File | What it does |
 |-------|------|-------------|
@@ -52,6 +52,7 @@ Launch all 5 agents in parallel (all in a single tool-call turn). Each agent's d
 | C: Architecture Review | `agents/architecture-review.md` | Correctness, security, performance, architecture — the serious bugs |
 | D: Discussion History | `agents/discussion-history.md` | Fetch review comments, summarize rounds, resolution status |
 | E: Clean Code Review | `agents/clean-code-review.md` | Naming, control flow, complexity, early returns — code quality |
+| F: DRY Check | `agents/dry-check.md` | Duplicate/near-duplicate code detection — identical blocks, structural twins, reimplemented utilities |
 
 **How to launch each agent:**
 1. Read the agent's `.md` file from this skill's `agents/` directory
@@ -63,7 +64,7 @@ Launch all 5 agents in parallel (all in a single tool-call turn). Each agent's d
 
 Review agents sometimes produce findings that sound convincing but are factually wrong — referencing outdated API behavior, misreading logic, or suggesting patterns that contradict the codebase. This phase catches those errors before they reach the final report.
 
-Once Agents C and E complete, collect their findings and launch 3 verification agents in parallel (single tool-call turn):
+Once Agents C, E, and F complete, collect their findings and launch 3 verification agents in parallel (single tool-call turn):
 
 | Agent | File | What it verifies |
 |-------|------|-----------------|
@@ -152,6 +153,16 @@ None — or naming, control flow, complexity, early returns findings from Agent 
   {code snippet}
   // suggested
   {concrete rewrite}
+  ```
+
+### DRY Violations
+None — or duplicate/near-duplicate code found in the codebase
+
+- **D1.** [{short description}]({github_link}) `{filepath}:{line}`
+  Duplicates `{existing_filepath}:{line}` — {explanation}
+  ```
+  // suggested: extract to shared function or reuse existing
+  {concrete fix}
   ```
 
 ### Nice to Have

@@ -1,15 +1,20 @@
-# AWS Health Agent
+# AWS Resources Agent
 
-Collect AWS-level metrics for ZenLabs production infrastructure. All commands use `aws` CLI with `--region ap-southeast-1` (unless noted). Credentials are pre-configured in `~/.aws/credentials`.
+Collect AWS resource metrics for ZenLabs production infrastructure. All commands use `aws` CLI with `--region ap-southeast-1` (unless noted). Credentials are pre-configured in `~/.aws/credentials`.
 
 Run all commands and return structured data. Don't interpret — just collect.
 
 ## Data Collection
 
-### 1. EC2 Instance Status
+### 1. EC2 Instance Details & Status
 
 ```bash
-# Instance status
+# Instance type and state
+aws ec2 describe-instances --instance-ids i-0894f8401cd76a578 --region ap-southeast-1 \
+  --query 'Reservations[0].Instances[0].{Type:InstanceType,State:State.Name,LaunchTime:LaunchTime,PrivateIp:PrivateIpAddress}' \
+  --output json
+
+# Instance health checks
 aws ec2 describe-instance-status --instance-ids i-0894f8401cd76a578 --region ap-southeast-1 \
   --query 'InstanceStatuses[0].{State:InstanceState.Name,System:SystemStatus.Status,Instance:InstanceStatus.Status}' \
   --output json
@@ -128,36 +133,15 @@ aws cloudwatch get-metric-statistics \
   --end-time $(date -u +%Y-%m-%dT%H:%M:%S) \
   --period 300 --statistics Average Minimum \
   --region ap-southeast-1 --output json
-
-# Read/Write IOPS
-aws cloudwatch get-metric-statistics \
-  --namespace AWS/RDS \
-  --metric-name ReadIOPS \
-  --dimensions Name=DBInstanceIdentifier,Value=prod-db \
-  --start-time $(date -u -v-1H +%Y-%m-%dT%H:%M:%S) \
-  --end-time $(date -u +%Y-%m-%dT%H:%M:%S) \
-  --period 300 --statistics Average \
-  --region ap-southeast-1 --output json
-
-aws cloudwatch get-metric-statistics \
-  --namespace AWS/RDS \
-  --metric-name WriteIOPS \
-  --dimensions Name=DBInstanceIdentifier,Value=prod-db \
-  --start-time $(date -u -v-1H +%Y-%m-%dT%H:%M:%S) \
-  --end-time $(date -u +%Y-%m-%dT%H:%M:%S) \
-  --period 300 --statistics Average \
-  --region ap-southeast-1 --output json
 ```
 
 ### 5. S3 Bucket Summary
-
-S3 bucket listing with `--recursive --summarize` can be very slow for large buckets. Just list bucket names — that's enough for the health report.
 
 ```bash
 aws s3api list-buckets --query 'Buckets[].{Name:Name,Created:CreationDate}' --output table
 ```
 
-### 6. EKS Cluster Status
+### 6. EKS Cluster Status (AWS API only — no kubectl)
 
 ```bash
 aws eks describe-cluster --name zenlabs-eks-prod --region ap-southeast-1 \
@@ -165,7 +149,7 @@ aws eks describe-cluster --name zenlabs-eks-prod --region ap-southeast-1 \
   --output json
 ```
 
-### 7. Recent RDS Events
+### 7. Recent RDS Events (last 24h)
 
 ```bash
 aws rds describe-events --source-type db-instance --duration 1440 --region ap-southeast-1 \
@@ -176,13 +160,43 @@ aws rds describe-events --source-type db-instance --duration 1440 --region ap-so
 
 Return all raw outputs clearly labeled:
 ```
+=== EC2 DETAILS ===
+(output)
+
 === EC2 STATUS ===
 (output)
 
 === EC2 CPU ===
 (output)
 
+=== EC2 CREDITS ===
+(output)
+
+=== EC2 NETWORK ===
+(output)
+
 === RDS STATUS ===
+(output)
+
+=== RDS CPU ===
+(output)
+
+=== RDS STORAGE ===
+(output)
+
+=== RDS CONNECTIONS ===
+(output)
+
+=== RDS MEMORY ===
+(output)
+
+=== S3 BUCKETS ===
+(output)
+
+=== EKS CLUSTER ===
+(output)
+
+=== RDS EVENTS ===
 (output)
 ```
 

@@ -82,6 +82,10 @@ export GITHUB_WORK_USERNAME="your-github-username"
 | **hnh-document-demo** | Say "wrap this up", "document this demo", "demo-1", or mention build-with-ai repo | Package a build session into a shareable "Build with AI" markdown doc with screenshots, push to zenlbs/build-with-ai GitHub repo. Focuses on technical process (skills, prompting, feedback loop), not just features. |
 | **hnh-zenlabs-infras** | Say "how's our infra", "infra report", "check the cluster", or ask about CPU/memory/disk | Real-time infrastructure health report — EKS cluster (nodes, pods, deployments, resource usage), AWS services (EC2, RDS, S3, CloudWatch), and application-level health (Sentry error rates, endpoint checks). |
 | **hnh-zenlabs-release** | Say "deploy this", "release this", "set up CI/CD", or mention ArgoCD/ECR/Helm | Full CI/CD pipeline setup and deployment — GitHub Actions, Dockerfile, ECR, Helm values, ArgoCD, GitHub secrets, DNS (Route53). Handles both new service setup and subsequent releases. |
+| **hnh-create-pr** | Say "create a PR", "wrap this up", or "open a pull request" | Wrap up a coding session into a PR — commit changes, create branch, push, open PR with description, self-review with /hnh-review-pr, fix findings, and post outcome. |
+| **hnh-evolve-skill** | Give feedback about skill behavior, say "remember to always do X" | Evolve existing skills based on session feedback — parse corrections, find target skill, propose and apply changes. |
+| **hnh-excalidraw** | Say "draw a diagram", "excalidraw", or ask for architecture/system diagrams | Programmatic Excalidraw canvas toolkit — create, edit, refine diagrams via MCP tools or REST API with real-time canvas sync. Supports ZenLabs branded diagram style (monochrome + green accent). |
+| **hnh-score-sgs** | Say "score sgs", mention Sangousha, or share game scores | Calculate Sangousha (SGS) game session payment splits based on player scores and a total pot. |
 
 ## Repo structure
 
@@ -114,6 +118,10 @@ skills/                # Custom skills
   hnh-document-demo/   #   Build session → shareable demo document
   hnh-zenlabs-infras/  #   Real-time infrastructure health report
   hnh-zenlabs-release/ #   CI/CD pipeline setup & deployment
+  hnh-create-pr/       #   Session → PR with self-review
+  hnh-evolve-skill/    #   Evolve skills from feedback
+  hnh-excalidraw/      #   Excalidraw diagram toolkit (MCP + REST)
+  hnh-score-sgs/       #   Sangousha game score calculator
 memory/                # Persistent memory (preferences, indexes)
 config/                # Portable config files (statusline)
 rules/                 # Global rules (git, credentials, workspace)

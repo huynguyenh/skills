@@ -43,6 +43,10 @@ See [git-identity.md](git-identity.md) — for zenlbs or personal repos, configu
 - `/hnh-wbs` — CTO-level Work Breakdown Structure generator (SDLC coverage, multi-approach evaluation, branded PDF)
 - `/hnh-document-demo` — Package build sessions into shareable demo docs (markdown + screenshots, pushed to `zenlbs/build-with-ai`)
 - `/hnh-zenlabs-release` — Set up CI/CD and deploy ZenLabs services (GitHub Actions, Docker, ECR, Helm, ArgoCD, secrets, DNS)
+- `/hnh-evolve-skill` — Evolve existing skills based on session feedback (parse corrections, find target skill, propose and apply changes)
+- `/hnh-create-pr` — Wrap up session into a PR (commit, push, PR description, self-review with /hnh-review-pr, fix findings, post outcome)
+- `/hnh-excalidraw` — Programmatic Excalidraw canvas toolkit (create, edit, refine diagrams via MCP tools or REST API with real-time sync, ZenLabs branded style)
+- `/hnh-score-sgs` — Calculate Sangousha (SGS) game session payment splits based on player scores and a total pot
 
 ## ZenLabs CI/CD (AWS)
 - **Env vars:** `ZENLABS_AWS_ACCESS_KEY_ID`, `ZENLABS_AWS_SECRET_ACCESS_KEY`, `ZENLABS_DEVOPS_SSH_PRIVATE_KEY`, `ZENLABS_GO_COMMON_SSH_PRIVATE_KEY` in `~/.zshrc`
@@ -54,7 +58,17 @@ See [git-identity.md](git-identity.md) — for zenlbs or personal repos, configu
 # Implementation Feedback
 
 See [feedback-implementation.md](feedback-implementation.md) — never deviate from approved plan mid-implementation; always ask before creating PRs and run `/hnh-review-pr` first.
+See [feedback-post-merge.md](feedback-post-merge.md) — always checkout and pull latest base branch after merging a PR.
+See [feedback-ui-verification.md](feedback-ui-verification.md) — thorough visual comparison + screenshots in PRs and Discord for UI work.
 
 # ENAT Project
 
 See [enat-design-guideline.md](enat-design-guideline.md) — brand color palette, typography, and visual style for the ENAT IMC 2026 campaign (green + yellow + gold).
+
+# VNKB Project
+
+See [vnkb.md](vnkb.md) — native macOS Vietnamese keyboard app (Swift, CGEvent taps, VNI input method). Architecture, tone placement rules, build commands, and debugging patterns.
+
+# TMS Project
+
+See [tms-project-conventions.md](tms-project-conventions.md) — no Jira tickets, Figma design source, dev branch target for gmd-tms-frontend.
