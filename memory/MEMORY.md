@@ -45,8 +45,7 @@ See [git-identity.md](git-identity.md) — for zenlbs or personal repos, configu
 - `/hnh-zenlabs-release` — Set up CI/CD and deploy ZenLabs services (GitHub Actions, Docker, ECR, Helm, ArgoCD, secrets, DNS)
 - `/hnh-evolve-skill` — Evolve existing skills based on session feedback (parse corrections, find target skill, propose and apply changes)
 - `/hnh-create-pr` — Wrap up session into a PR (commit, push, PR description, self-review with /hnh-review-pr, fix findings, post outcome)
-- `/hnh-excalidraw` — Programmatic Excalidraw canvas toolkit (create, edit, refine diagrams via MCP tools or REST API with real-time sync, ZenLabs branded style)
-- `/hnh-score-sgs` — Calculate Sangousha (SGS) game session payment splits based on player scores and a total pot
+- `/hnh-profile-watch` — Signal-driven person intelligence brief (VC lens: deal flow, funding rounds, M&A, portfolio signals, market thesis, competitive intelligence, extensible source registry)
 
 ## ZenLabs CI/CD (AWS)
 - **Env vars:** `ZENLABS_AWS_ACCESS_KEY_ID`, `ZENLABS_AWS_SECRET_ACCESS_KEY`, `ZENLABS_DEVOPS_SSH_PRIVATE_KEY`, `ZENLABS_GO_COMMON_SSH_PRIVATE_KEY` in `~/.zshrc`
@@ -55,10 +54,15 @@ See [git-identity.md](git-identity.md) — for zenlbs or personal repos, configu
 - **Note:** The IAM user (`github-action`) can push images but CANNOT create ECR repos — that requires AWS console admin access
 - **Skill:** `/hnh-zenlabs-release` handles the full pipeline setup
 
+# Discord Notifier
+
+See [feedback-discord-notifier.md](feedback-discord-notifier.md) — when any service sends Discord notifications, always check the service name against the identity mapping and remind the user if the client isn't mapped yet.
+
 # Implementation Feedback
 
 See [feedback-implementation.md](feedback-implementation.md) — never deviate from approved plan mid-implementation; always ask before creating PRs and run `/hnh-review-pr` first.
 See [feedback-post-merge.md](feedback-post-merge.md) — always checkout and pull latest base branch after merging a PR.
+See [feedback_release_confirmation.md](feedback_release_confirmation.md) — never release to prod without explicit user confirmation.
 See [feedback-ui-verification.md](feedback-ui-verification.md) — thorough visual comparison + screenshots in PRs and Discord for UI work.
 
 # ENAT Project

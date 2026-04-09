@@ -57,12 +57,29 @@ After each implementation step, run the QA Verifier agent (`agents/qa-verifier.m
 
 **Critical rule**: For system-level features (event handling, keyboard input, OS APIs, networking), always write and run a standalone test script that verifies the mechanism in isolation BEFORE integrating it into the app.
 
-### 8. PR creation
+### 8. PR creation & self-test
 After implementation is complete, ask the user: **"Should I create a PR?"** If yes:
-1. Create the PR
-2. Run `/hnh-review-pr` on the PR
-3. Fix all findings from the review
-4. Report back with the final PR link
+
+1. **Create a draft PR** — use `/hnh-create-pr` or `gh pr create --draft`. Draft means it's not visible as "ready" to reviewers yet, giving us room to self-test and fix issues first.
+
+2. **Self-test** — run the project's build and test suite against the PR branch:
+   - `npm run build` / `make build` / whatever the project uses
+   - `npm test` / `pytest` / `go test ./...` / the project's test command
+   - If the repo has lint or type checks, run those too
+   - Fix any failures before proceeding. Commit fixes and push.
+
+3. **Self-review with `/hnh-review-pr`** — run the full review on the draft PR. This catches architecture issues, code quality problems, and DRY violations before any human sees it.
+
+4. **Fix all review findings** — address CRITICAL and WARNING findings. Fix clear SUGGESTION and CLEAN CODE wins. Commit, push.
+
+5. **Re-test** — run build + tests again after fixes to make sure nothing broke.
+
+6. **Mark ready for review** — once everything passes:
+   ```bash
+   gh pr ready {pr-number}
+   ```
+
+7. **Report back** — share the PR link, summarize what was found and fixed, confirm build/tests pass.
 
 ## Implementation Discipline
 

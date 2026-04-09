@@ -43,7 +43,7 @@ Save the PR URL, title, body, head branch, and diff for use in later phases.
 
 ### Phase 2: Parallel Work
 
-Launch all 6 agents in parallel (all in a single tool-call turn). Each agent's detailed instructions are in its own file under `agents/` — read the file and pass its contents as the agent prompt.
+Launch all 7 agents in parallel (all in a single tool-call turn). Each agent's detailed instructions are in its own file under `agents/` — read the file and pass its contents as the agent prompt.
 
 | Agent | File | What it does |
 |-------|------|-------------|
@@ -53,18 +53,19 @@ Launch all 6 agents in parallel (all in a single tool-call turn). Each agent's d
 | D: Discussion History | `agents/discussion-history.md` | Fetch review comments, summarize rounds, resolution status |
 | E: Clean Code Review | `agents/clean-code-review.md` | Naming, control flow, complexity, early returns — code quality |
 | F: DRY Check | `agents/dry-check.md` | Duplicate/near-duplicate code detection — identical blocks, structural twins, reimplemented utilities |
+| G: Layer Compliance | `agents/layer-compliance.md` | Verify code respects repo layer boundaries (handler/controller/repo), CLAUDE.md conventions, and reuses existing utilities |
 
 **How to launch each agent:**
 1. Read the agent's `.md` file from this skill's `agents/` directory
 2. Launch a general-purpose agent with the file contents as instructions, plus the PR-specific context (diff, title, body, owner, repo, pr_number)
-3. For agents C and E, also pass the full diff (save to a temp file and reference it)
-4. All 5 agents launch in the same tool-call turn for maximum parallelism
+3. For agents C, E, and G, also pass the full diff (save to a temp file and reference it)
+4. All 7 agents launch in the same tool-call turn for maximum parallelism
 
 ### Phase 3: Verification
 
 Review agents sometimes produce findings that sound convincing but are factually wrong — referencing outdated API behavior, misreading logic, or suggesting patterns that contradict the codebase. This phase catches those errors before they reach the final report.
 
-Once Agents C, E, and F complete, collect their findings and launch 3 verification agents in parallel (single tool-call turn):
+Once Agents C, E, F, and G complete, collect their findings and launch 3 verification agents in parallel (single tool-call turn):
 
 | Agent | File | What it verifies |
 |-------|------|-----------------|
@@ -162,6 +163,18 @@ None — or duplicate/near-duplicate code found in the codebase
   Duplicates `{existing_filepath}:{line}` — {explanation}
   ```
   // suggested: extract to shared function or reuse existing
+  {concrete fix}
+  ```
+
+### Layer Compliance
+None — or findings from Agent G (layer boundary violations, convention mismatches, reuse opportunities)
+
+- **L1.** [{short description}]({github_link}) `{filepath}:{line}`
+  {violation type: e.g., "handler calls DB directly", "business logic in repository"}
+  ```
+  // current
+  {code that violates the layer rule}
+  // suggested: move to {correct layer}
   {concrete fix}
   ```
 

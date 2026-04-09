@@ -86,6 +86,7 @@ export GITHUB_WORK_USERNAME="your-github-username"
 | **hnh-evolve-skill** | Give feedback about skill behavior, say "remember to always do X" | Evolve existing skills based on session feedback — parse corrections, find target skill, propose and apply changes. |
 | **hnh-excalidraw** | Say "draw a diagram", "excalidraw", or ask for architecture/system diagrams | Programmatic Excalidraw canvas toolkit — create, edit, refine diagrams via MCP tools or REST API with real-time canvas sync. Supports ZenLabs branded diagram style (monochrome + green accent). |
 | **hnh-score-sgs** | Say "score sgs", mention Sangousha, or share game scores | Calculate Sangousha (SGS) game session payment splits based on player scores and a total pot. |
+| **hnh-profile-watch** | Say "profile watch [person]", "track [person]", "what has [person] been up to" | Signal-driven intelligence brief through a VC lens — deep-research a person's online presence, find social/investment profiles, gather recent activity, and produce a brief focused on deal flow, funding rounds, M&A, portfolio signals, market thesis, and competitive intelligence. Maintains an extensible source registry per profile. |
 
 ## Repo structure
 
@@ -122,6 +123,7 @@ skills/                # Custom skills
   hnh-evolve-skill/    #   Evolve skills from feedback
   hnh-excalidraw/      #   Excalidraw diagram toolkit (MCP + REST)
   hnh-score-sgs/       #   Sangousha game score calculator
+  hnh-profile-watch/   #   VC signal-driven person intelligence brief
 memory/                # Persistent memory (preferences, indexes)
 config/                # Portable config files (statusline)
 rules/                 # Global rules (git, credentials, workspace)
